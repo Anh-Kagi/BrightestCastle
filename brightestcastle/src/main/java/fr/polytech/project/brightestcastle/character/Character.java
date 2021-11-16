@@ -31,8 +31,7 @@ public class Character {
 		this.ATK = 3 + strength;
 		this.STA = 20;
 
-		if (job.equals("PALADIN")) this.Threat=25;
-		else this.Threat=20;
+		this.Threat=20;
 
 	}
 

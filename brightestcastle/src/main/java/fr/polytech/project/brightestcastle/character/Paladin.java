@@ -6,7 +6,7 @@ public class Paladin extends Character {
 	
 	public Paladin(String name, CharacterClass job, byte constitution, byte strength, byte vigor) {
 		super(name, job, (byte) (constitution+2), strength, vigor);
-		// TODO Auto-generated constructor stub
+		setThreat(25);
 	}
 
 	@Override
