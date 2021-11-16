@@ -2,10 +2,10 @@ package fr.polytech.project.brightestcastle.character;
 
 import java.lang.Math;
 
-public class BOWMAN extends Character {
+public class Bowman extends Character {
 	// passive: Swift: 15% chance to dodge all damage
 
-	public BOWMAN(String name, CharacterClass job, byte constitution, byte strength, byte vigor) {
+	public Bowman(String name, CharacterClass job, byte constitution, byte strength, byte vigor) {
 		super(name, job, constitution, strength, (byte) (vigor+2));
 		// TODO Auto-generated constructor stub
 	}
