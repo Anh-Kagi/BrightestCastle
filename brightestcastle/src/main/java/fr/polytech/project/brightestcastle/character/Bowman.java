@@ -1,4 +1,4 @@
-package classSystem;
+package fr.polytech.project.brightestcastle.character;
 
 import java.lang.Math;
 

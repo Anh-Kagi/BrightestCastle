@@ -1,4 +1,6 @@
-package classSystem;
+
+package fr.polytech.project.brightestcastle.character;
+
 
 public enum CharacterClass {
 	

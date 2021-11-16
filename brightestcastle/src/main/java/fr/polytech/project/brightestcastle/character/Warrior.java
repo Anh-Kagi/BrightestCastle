@@ -1,4 +1,5 @@
-package classSystem;
+package fr.polytech.project.brightestcastle.character;
+
 
 public class Warrior extends Character {
 	// passive= Rage -> attk+ when hp low
@@ -12,7 +13,9 @@ public class Warrior extends Character {
 	@Override
 	public int getATK(){
 		int ATK;
+
 		ATK= ((getHPMax() - getHP()) / getHPMax()) * super.getATK() + super.getATK() ;
+
 		return ATK;
 		
 	}

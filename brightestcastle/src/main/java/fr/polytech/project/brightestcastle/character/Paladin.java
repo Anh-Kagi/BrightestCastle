@@ -1,4 +1,4 @@
-package classSystem;
+package fr.polytech.project.brightestcastle.character;
 
 public class Paladin extends Character {
 	//passive : Taunt => greater threat, threat generation improved by 25%
