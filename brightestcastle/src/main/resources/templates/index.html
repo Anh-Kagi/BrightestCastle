@@ -6,5 +6,32 @@
 </head>
 <body>
 	<h1>Brightest Castle</h1>
+	
+	<form id="form_chara" th:action="@{/createchara}" th:object="${CharaForm}" method="post">
+		<label>Name:</label>
+		<input type="text" th:field="*{name}" placeholder="character name"/>
+		<br/>
+		
+		<label>Job:</label>
+		<select th:field="*{job}">
+			<option value=""> -- </option>
+			<option th:each="job : ${T(fr.polytech.project.brightestcastle.forms.Job).values()}" th:value="${job}" th:text="${job}"></option>
+		</select>
+		<br/>
+		
+		<label>CON:</label>
+		<input type="range" th:field="*{CON}" min="0" max="7" step="1"/>
+		<br/>
+		
+		<label>STR:</label>
+		<input type="range" th:field="*{STR}" min="0" max="7" step="1"/>
+		<br/>
+		
+		<label>VIG:</label>
+		<input type="range" th:field="*{VIG}" min="0" max="7" step="1"/>
+		<br/>
+		
+		<input type="submit" value="Create"/>
+	</form>
 </body>
 </html>
