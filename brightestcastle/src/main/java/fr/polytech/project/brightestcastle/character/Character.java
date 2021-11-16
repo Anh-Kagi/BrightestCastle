@@ -1,5 +1,6 @@
 package fr.polytech.project.brightestcastle.character;
 
+
 public class Character {
 	
 	private String name;
@@ -14,6 +15,9 @@ public class Character {
 	private int ATK;
 	private int STA; // same for everyone, regen each turn
 	private int DEF;
+
+	private int Threat;
+
 	
 	public Character(String name, CharacterClass job,byte constitution, byte strength, byte vigor) {
 		super();
@@ -26,6 +30,10 @@ public class Character {
 		this.HP = 25 +  constitution * 5;
 		this.ATK = 3 + strength;
 		this.STA = 20;
+
+		if (job.equals("PALADIN")) this.Threat=25;
+		else this.Threat=20;
+
 	}
 
 	public byte getConstitution() {
@@ -92,6 +100,16 @@ public class Character {
 		DEF = dEF;
 	}
 	
+	
+	
+	public int getThreat() {
+		return Threat;
+	}
+
+	public void setThreat(int threat) {
+		Threat = threat;
+	}
+
 	public void takeDamage(int damage) {
 		
 		setHP(getHP()-(damage-getDEF()));
