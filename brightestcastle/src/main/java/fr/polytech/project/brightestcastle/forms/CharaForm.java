@@ -9,8 +9,6 @@ public class CharaForm {
 	private byte STR;
 	private byte VIG;
 	
-	public boolean valid = false;
-	
 	public CharaForm() {}
 	public CharaForm(String name, Job job, byte CON, byte STR, byte VIG) {
 		setName(name);
@@ -58,5 +56,19 @@ public class CharaForm {
 	
 	public byte getVIG() {
 		return this.VIG;
+	}
+	
+	public boolean isValid() {
+		boolean maxCON = CON >= 0 && CON <= 5;
+		boolean maxSTR = STR >= 0 && STR <= 5;
+		boolean maxVIG = VIG >= 0 && VIG <= 5;
+		
+		boolean maxPts = (CON + STR + VIG) == 5;
+		
+		boolean validJob = (job != null);
+		
+		boolean validName = (name != null && !name.isEmpty());
+		
+		return maxCON && maxSTR && maxVIG && maxPts && validJob && validName;
 	}
 }

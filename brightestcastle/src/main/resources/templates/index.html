@@ -7,7 +7,11 @@
 <body>
 	<h1>Brightest Castle</h1>
 	
-	<form id="form_chara" th:action="@{/createchara}" th:object="${CharaForm}" method="post">
+	<div th:if="${invalid}">
+	  <p><strong>Please verify your character sheets, some values are invalid</strong></p>
+	</div>
+	
+	<form id="form_chara" th:action="@{/createchara}" th:object="${form}" method="post">
 		<label>Name:</label>
 		<input type="text" th:field="*{name}" placeholder="character name"/>
 		<br/>
@@ -20,15 +24,15 @@
 		<br/>
 		
 		<label>CON:</label>
-		<input type="range" th:field="*{CON}" min="0" max="7" step="1"/>
+		<input type="range" th:field="*{CON}" min="0" max="5" step="1"/>
 		<br/>
 		
 		<label>STR:</label>
-		<input type="range" th:field="*{STR}" min="0" max="7" step="1"/>
+		<input type="range" th:field="*{STR}" min="0" max="5" step="1"/>
 		<br/>
 		
 		<label>VIG:</label>
-		<input type="range" th:field="*{VIG}" min="0" max="7" step="1"/>
+		<input type="range" th:field="*{VIG}" min="0" max="5" step="1"/>
 		<br/>
 		
 		<input type="submit" value="Create"/>
