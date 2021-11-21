@@ -11,7 +11,7 @@
 	  <p><strong>Please verify your character sheets, some values are invalid</strong></p>
 	</div>
 	
-	<form id="form_chara" th:action="@{/createchara}" th:object="${form}" method="post">
+	<form id="form_chara" th:action="@{/chara}" th:object="${form}" method="post">
 		<label>Name:</label>
 		<input type="text" th:field="*{name}" placeholder="character name"/>
 		<br/>

@@ -10,13 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.polytech.project.brightestcastle.forms.CharaForm;
 
 @Controller
-@RequestMapping(path={"","/"})
 public class HomepageController {
 	@GetMapping(path= {"", "/"})
 	public String index(HttpServletRequest req, Model model, @RequestParam(name="invalid", required=false) String invalid) {
@@ -30,12 +28,12 @@ public class HomepageController {
 		return "index";
 	}
 	
-	@PostMapping(path="/createchara")
-	public String createChara(HttpServletRequest req, HttpServletResponse res, @ModelAttribute CharaForm form, Model model) throws IOException {
+	@PostMapping(path="/chara")
+	public String chara(HttpServletRequest req, HttpServletResponse res, @ModelAttribute CharaForm form, Model model) throws IOException {
 		req.getSession().setAttribute("chara", form);
 		if (form.isValid()) {
 			model.addAttribute("chara", form);
-			return "createchara";
+			return "chara";
 		} else {
 			res.setStatus(302);
 			res.sendRedirect("/?invalid");
