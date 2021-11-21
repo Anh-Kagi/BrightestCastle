@@ -1,4 +1,4 @@
-package fr.polytech.project.brightestcastle.controllers;
+package fr.polytech.project.brightestcastle.controller;
 
 import java.io.IOException;
 
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.polytech.project.brightestcastle.forms.CharaForm;
+import fr.polytech.project.brightestcastle.gameplay.Map;
 
 @Controller
 public class HomepageController {
@@ -39,5 +40,11 @@ public class HomepageController {
 			res.sendRedirect("/?invalid");
 			return "blank";
 		}
+	}
+	
+	@GetMapping(path="/map")
+	public String grid(Model model) {
+		model.addAttribute("grid", new Map());
+		return "grid";
 	}
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Map</title>
+</head>
+
+<body>
+  <table>
+    <tbody>
+    <tr th:each="row : ${#numbers.sequence(0, grid.getHeight()-1)}">
+      <td th:each="col : ${#numbers.sequence(0, grid.getWidth()-1)}">
+      	[<span th:text="${row}"></span>.<span th:text="${col}"></span>] => <span th:text="${grid.getGrid()[row][col].getChr()}"></span>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</body>
+
+</html>
