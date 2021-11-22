@@ -2,7 +2,7 @@ package fr.polytech.project.brightestcastle.character;
 
 import java.lang.Math;
 
-public class Bowman extends Character {
+public class Bowman extends Character implements Attack{
 	// passive: Swift: 15% chance to dodge all damage
 
 	public Bowman(String name, CharacterClass job, byte constitution, byte strength, byte vigor) {
@@ -18,5 +18,53 @@ public class Bowman extends Character {
 		else {
 			setHP(getHP()-(damage-getDEF()));
 		}
+	}
+
+	@Override
+	public void attack1(Character target) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void attack2(Character target) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void attack3(Character target) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void attack4(Character target) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public String getAtk1Name() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAtk2Name() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAtk3Name() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getAtk4Name() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -114,4 +114,6 @@ public class Character {
 		setHP(getHP()-(damage-getDEF()));
 	
 	}
+
+
 }
