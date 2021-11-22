@@ -12,12 +12,16 @@ public class Bowman extends Character implements Attack{
 	}
 
 	@Override
-	public void takeDamage(int damage) {
+	public int takeDamage(int damage) {
 		if ( Math.random()*100 <=15) {
 			System.out.println("Dodged !");
+			return 0;
 		}
 		else {
-			setHP(getHP()-(damage-getDEF()));
+			
+			int damageInflicted=damage-getDEF();
+			setHP(getHP()-damageInflicted);
+			return damageInflicted;
 		}
 	}
 
