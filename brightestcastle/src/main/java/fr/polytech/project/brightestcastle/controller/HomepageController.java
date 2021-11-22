@@ -44,7 +44,7 @@ public class HomepageController {
 	
 	@GetMapping(path="/map")
 	public String grid(Model model) {
-		model.addAttribute("grid", new Map());
+		model.addAttribute("map", Map.generate(6, 5));
 		return "grid";
 	}
 }

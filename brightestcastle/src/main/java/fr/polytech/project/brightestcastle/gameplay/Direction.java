@@ -1,4 +1,5 @@
 package fr.polytech.project.brightestcastle.gameplay;
 
-public class Square {
+public enum Direction {
+	UP, DOWN, LEFT, RIGHT;
 }

@@ -9,9 +9,12 @@
 <body>
   <table>
     <tbody>
-    <tr th:each="row : ${#numbers.sequence(0, grid.getHeight()-1)}">
-      <td th:each="col : ${#numbers.sequence(0, grid.getWidth()-1)}">
-      	[<span th:text="${row}"></span>.<span th:text="${col}"></span>] => <span th:text="${grid.getGrid()[row][col].getChr()}"></span>
+    <tr th:each="row : ${#numbers.sequence(0, map.getHeight()-1)}">
+    <td th:each="col : ${#numbers.sequence(0, map.getWidth()-1)}">
+    	<div th:switch="${map.getSquare(col, row) != null}">
+    		<span th:case="${true}">0</span>
+    		<span th:case="*"> </span>
+    	</div>
       </td>
     </tr>
     </tbody>
