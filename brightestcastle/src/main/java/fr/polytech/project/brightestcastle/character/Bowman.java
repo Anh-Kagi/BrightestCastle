@@ -22,14 +22,14 @@ public class Bowman extends Character implements Attack{
 
 	@Override
 	public void attack1(Character target) {
-		// TODO Auto-generated method stub
+		target.takeDamage(getATK());
 		
 	}
 
 	@Override
 	public void attack2(Character target) {
-		// TODO Auto-generated method stub
-		
+		target.takeDamage((int) (getATK()*0.5));
+		generateSTA(getVigor());
 	}
 
 	@Override
@@ -40,31 +40,59 @@ public class Bowman extends Character implements Attack{
 
 	@Override
 	public void attack4(Character target) {
-		// TODO Auto-generated method stub
+		if (getSTA()>=5) {
+			target.takeDamage(getATK()*2);
+			//TODO add debuf
+			setSTA(getSTA()-5);
+		} else System.out.println("Not enough Stamina!");
 		
 	}
 
 	@Override
 	public String getAtk1Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "SHOT";
 	}
 
 	@Override
 	public String getAtk2Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "STAB";
 	}
 
 	@Override
 	public String getAtk3Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "MAGIC ARROW";
 	}
 
 	@Override
 	public String getAtk4Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "PIERCE";
+	}
+
+	@Override
+	public String getAtk1Desc() {
+		// TODO Auto-generated method stub
+		return "Regular ranged attack that deal 100% to a selected rear row";
+	}
+
+	@Override
+	public String getAtk2Desc() {
+		// TODO Auto-generated method stub
+		return "Melee attack, deals only 50% damages to the front row, but double stamina regeneration for this turn";
+	}
+
+	@Override
+	public String getAtk3Desc() {
+		// TODO Auto-generated method stub
+		return "Send guided arrows at targets at random for 100% send one more arrow every 3 stamina points. Ignore Armor and dodge";
+	}
+
+	@Override
+	public String getAtk4Desc() {
+		// TODO Auto-generated method stub
+		return "Completely pierce through any foe for 200% damage, also reduces it's defense by 25% for 3 turns, cost 5 stamina.";
 	}
 }

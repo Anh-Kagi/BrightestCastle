@@ -22,12 +22,12 @@ public class Warrior extends Character implements Attack {
 
 	@Override
 	public void attack1(Character target) {
-		// TODO Auto-generated method stub
+		target.takeDamage(getATK());
 		
 	}
 
 	@Override
-	public void attack2(Character target) {
+	public void attack2(Character target1) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -40,32 +40,61 @@ public class Warrior extends Character implements Attack {
 
 	@Override
 	public void attack4(Character target) {
-		// TODO Auto-generated method stub
+		if(getSTA()==20) {
+			target.takeDamage(getATK()*5);
+			setSTA(0);
+			setThreat(getATK()*5);
+		}
+		else System.out.println("Not enough Stamina!");
 		
 	}
 
 	@Override
 	public String getAtk1Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "BASH";
 	}
 
 	@Override
 	public String getAtk2Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "SWING";
 	}
 
 	@Override
 	public String getAtk3Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "INTIMIDATE";
 	}
 
 	@Override
 	public String getAtk4Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "OBLITERATE";
+	}
+
+	@Override
+	public String getAtk1Desc() {
+		// TODO Auto-generated method stub
+		return "Deals 100% to the target in the front row";
+	}
+
+	@Override
+	public String getAtk2Desc() {
+		// TODO Auto-generated method stub
+		return "A circular attack, target the two front rows for 150% of damages, \nHave a 25% chance to apply stun, cost 3 stamina";
+	}
+
+	@Override
+	public String getAtk3Desc() {
+		// TODO Auto-generated method stub
+		return "Shout a war cry that affects every foes, diminishes their ATK by 25% for 2 turns";
+	}
+
+	@Override
+	public String getAtk4Desc() {
+		// TODO Auto-generated method stub
+		return "Completely crush the foe on the front row for 500% damage with a 100% chance stun. Only at max stamina, deleat it completely afterward.";
 	}
 
 }

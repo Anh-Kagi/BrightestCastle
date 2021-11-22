@@ -16,7 +16,7 @@ public class Paladin extends Character implements Attack {
 
 	@Override
 	public void attack1(Character target) {
-		// TODO Auto-generated method stub
+		target.takeDamage(getATK());
 		
 	}
 
@@ -28,8 +28,9 @@ public class Paladin extends Character implements Attack {
 
 	@Override
 	public void attack3(Character target) {
-		// TODO Auto-generated method stub
-		
+		if (getSTA()>=3) {
+			setHP(getConstitution());
+		}
 	}
 
 	@Override
@@ -41,24 +42,48 @@ public class Paladin extends Character implements Attack {
 	@Override
 	public String getAtk1Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "SLASH";
 	}
 
 	@Override
 	public String getAtk2Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "RALLY";
 	}
 
 	@Override
 	public String getAtk3Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "PRAYER";
 	}
 
 	@Override
 	public String getAtk4Name() {
 		// TODO Auto-generated method stub
-		return null;
+		return "PURGE";
+	}
+
+	@Override
+	public String getAtk1Desc() {
+		// TODO Auto-generated method stub
+		return "Slice the target with a sword for 100% damage";
+	}
+
+	@Override
+	public String getAtk2Desc() {
+		// TODO Auto-generated method stub
+		return "Inspire the allies in order to boost their defense by 25% for 2 turns";
+	}
+
+	@Override
+	public String getAtk3Desc() {
+		// TODO Auto-generated method stub
+		return "The paladin heal himself using is constitution instead of ATK, cost 3 stamina";
+	}
+
+	@Override
+	public String getAtk4Desc() {
+		// TODO Auto-generated method stub
+		return "Cleanse the world from evil with light dealing 300% damages to all foes, cost 10 stamina";
 	}
 }

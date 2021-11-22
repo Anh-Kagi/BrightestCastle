@@ -106,13 +106,21 @@ public class Character {
 	}
 
 	public void setThreat(int threat) {
-		Threat = threat;
+		Threat += threat;
 	}
 
 	public void takeDamage(int damage) {
 		
 		setHP(getHP()-(damage-getDEF()));
 	
+	}
+	
+	public void takeTrueDamage(int damage) {
+		setHP(getHP()-damage);
+	}
+	
+	public void generateSTA (int vigor) {
+		setSTA(getSTA()+vigor);
 	}
 
 
