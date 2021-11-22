@@ -27,24 +27,28 @@ public class Bowman extends Character implements Attack{
 
 	@Override
 	public void attack1(Character[] target) {
-		target[0].takeDamage(getATK());
-		
+		int threat=target[0].takeDamage(getATK());
+		addThreat(threat);
 	}
 
 	@Override
 	public void attack2(Character[] target) {
-		target[0].takeDamage((int) (getATK()*0.5));
+		int threat = target[0].takeDamage((int) (getATK()*0.5));
 		generateSTA(getVigor());
+		addThreat(threat);
 	}
 
 	@Override
 	public void attack3(Character target[]) {
 		if (getSTA()>=3) {
+			int threat=0;
 			int nbArrows=(int) Math.floor(getSTA()/3);
 			for(int i=0;i<nbArrows;i++) {
 				int randomNum = ThreadLocalRandom.current().nextInt(0, 3 + 1);
-				target[randomNum].takeTrueDamage(getATK());	
+				threat+=target[randomNum].takeTrueDamage(getATK());
+				
 			}
+			addThreat(threat);
 			setSTA(getSTA()-nbArrows*3);
 		} else System.out.println("Not enough Stamina !");
 		
@@ -53,9 +57,10 @@ public class Bowman extends Character implements Attack{
 	@Override
 	public void attack4(Character[] target) {
 		if (getSTA()>=5) {
-			target[0].takeDamage(getATK()*2);
+			int threat=target[0].takeDamage(getATK()*2);
 			//TODO add debuf
 			setSTA(getSTA()-5);
+			addThreat(threat);
 		} else System.out.println("Not enough Stamina!");
 		
 	}

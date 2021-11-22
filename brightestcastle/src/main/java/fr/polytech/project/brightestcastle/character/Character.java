@@ -31,7 +31,7 @@ public class Character {
 		this.ATK = 3 + strength;
 		this.STA = 20;
 
-		this.Threat=20;
+		this.Threat=0;
 
 	}
 
@@ -106,8 +106,13 @@ public class Character {
 	public int getThreat() {
 		return Threat;
 	}
-
+	
 	public void setThreat(int threat) {
+		Threat = threat;
+	}
+
+
+	public void addThreat(int threat) {
 		Threat += threat;
 	}
 
