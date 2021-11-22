@@ -64,7 +64,9 @@ public class Character {
 	}
 
 	public void setHP(int hP) {
-		HP = hP;
+		if(hP<=HPMax) {
+			HP = hP;
+		} else HP=HPMax;
 	}
 
 	public int getHPMax() {

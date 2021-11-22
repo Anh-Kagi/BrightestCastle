@@ -15,28 +15,33 @@ public class Paladin extends Character implements Attack {
 	}
 
 	@Override
-	public void attack1(Character target) {
-		target.takeDamage(getATK());
+	public void attack1(Character target[]) {
+		target[0].takeDamage(getATK());
 		
 	}
 
 	@Override
-	public void attack2(Character target) {
+	public void attack2(Character target[]) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void attack3(Character target) {
+	public void attack3(Character target[]) {
 		if (getSTA()>=3) {
-			setHP(getConstitution());
-		}
+			setHP(getHP()+getConstitution());
+			setSTA(getSTA()-3);
+		}else  System.out.println("Not enough Stamina !");
 	}
 
 	@Override
-	public void attack4(Character target) {
-		// TODO Auto-generated method stub
-		
+	public void attack4(Character target[]) {
+		if (getSTA()>=10) {
+			for (int i=0;i<4;i++) {
+				target[i].takeDamage(3*getATK());
+			}
+			setSTA(getSTA()-10);
+		}else System.out.println("Not enough Stamina !");
 	}
 
 	@Override

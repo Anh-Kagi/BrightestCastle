@@ -2,10 +2,10 @@ package fr.polytech.project.brightestcastle.character;
 
 public interface Attack {
 
-	public void attack1(Character target);
-	public void attack2(Character target);
-	public void attack3(Character target);
-	public void attack4(Character target);
+	public void attack1(Character[] targets);
+	public void attack2(Character[] targets);
+	public void attack3(Character[] targets);
+	public void attack4(Character[] targets);
 	
 	public String getAtk1Name();
 	public String getAtk2Name();

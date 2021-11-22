@@ -1,6 +1,7 @@
 package fr.polytech.project.brightestcastle.character;
 
 import java.lang.Math;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Bowman extends Character implements Attack{
 	// passive: Swift: 15% chance to dodge all damage
@@ -21,27 +22,34 @@ public class Bowman extends Character implements Attack{
 	}
 
 	@Override
-	public void attack1(Character target) {
-		target.takeDamage(getATK());
+	public void attack1(Character[] target) {
+		target[0].takeDamage(getATK());
 		
 	}
 
 	@Override
-	public void attack2(Character target) {
-		target.takeDamage((int) (getATK()*0.5));
+	public void attack2(Character[] target) {
+		target[0].takeDamage((int) (getATK()*0.5));
 		generateSTA(getVigor());
 	}
 
 	@Override
-	public void attack3(Character target) {
-		// TODO Auto-generated method stub
+	public void attack3(Character target[]) {
+		if (getSTA()>=3) {
+			int nbArrows=(int) Math.floor(getSTA()/3);
+			for(int i=0;i<nbArrows;i++) {
+				int randomNum = ThreadLocalRandom.current().nextInt(0, 3 + 1);
+				target[randomNum].takeTrueDamage(getATK());	
+			}
+			setSTA(getSTA()-nbArrows*3);
+		} else System.out.println("Not enough Stamina !");
 		
 	}
 
 	@Override
-	public void attack4(Character target) {
+	public void attack4(Character[] target) {
 		if (getSTA()>=5) {
-			target.takeDamage(getATK()*2);
+			target[0].takeDamage(getATK()*2);
 			//TODO add debuf
 			setSTA(getSTA()-5);
 		} else System.out.println("Not enough Stamina!");

@@ -21,29 +21,34 @@ public class Warrior extends Character implements Attack {
 	}
 
 	@Override
-	public void attack1(Character target) {
-		target.takeDamage(getATK());
+	public void attack1(Character target[]) {
+		target[0].takeDamage(getATK());
 		
 	}
 
 	@Override
-	public void attack2(Character target1) {
+	public void attack2(Character target[]) {
+		// TODO Add stun effect
+		if (getSTA()>=3) {
+			target[0].takeDamage((int) (1.5*getATK()));
+			target[1].takeDamage((int) (1.5*getATK()));
+		}else setSTA(getSTA()-3);	
+		
+	}
+
+	@Override
+	public void attack3(Character target[]) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void attack3(Character target) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void attack4(Character target) {
+	public void attack4(Character target[]) {
 		if(getSTA()==20) {
-			target.takeDamage(getATK()*5);
+			target[0].takeDamage(getATK()*5);
 			setSTA(0);
 			setThreat(getATK()*5);
+			//TODO add stun effect
 		}
 		else System.out.println("Not enough Stamina!");
 		
