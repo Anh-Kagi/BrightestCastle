@@ -13,13 +13,6 @@ public class MazeAnt extends Coords {
 		dir(dir);
 	}
 	
-	public Coords getCoords() {
-		Coords coords = new Coords();
-		coords.x(x());
-		coords.y(y());
-		return coords;
-	}
-	
 	public boolean isDead() {
 		return this.life <= 0;
 	}

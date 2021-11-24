@@ -71,7 +71,7 @@ public class Map {
 		ants.add(new MazeAnt(0, rand.nextInt(h), map.getWidth(), map.getHeight(), Direction.RIGHT, rand.nextInt(1)+1));
 		
 		map.generateSquare(ants.get(0));
-		map.setStart(ants.get(0).getCoords());
+		map.setStart(ants.get(0).cloneCoords());
 		
 		boolean finished = false;
 		while (ants.size() > 0) {
@@ -82,7 +82,7 @@ public class Map {
 					ants.remove(a);
 				if (a.x() == map.getWidth()-1) {
 					finished = true;
-					map.setEnd(a.getCoords());
+					map.setEnd(a.cloneCoords());
 					ants.remove(a);
 					continue;
 				}

@@ -25,4 +25,11 @@ public class Coords {
 	public int y() {
 		return this.y;
 	}
+	
+	public Coords cloneCoords() {
+		Coords coords = new Coords();
+		coords.x(x());
+		coords.y(y());
+		return coords;
+	}
 }
