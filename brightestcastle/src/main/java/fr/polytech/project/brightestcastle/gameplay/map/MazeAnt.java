@@ -25,25 +25,35 @@ public class MazeAnt extends Coords {
 		return this.dir;
 	}
 	
-	public void move(boolean finished) {
+	public boolean move(boolean finished) {
+		boolean moved = false;
 		switch(dir()) {
 		case UP:
-			if (y() > 0)
+			if (y() > 0) {
 				y(y() - 1);
+				moved = true;
+			}
 			break;
 		case DOWN:
-			if (y() < h-1)
+			if (y() < h-1) {
 				y(y() + 1);
+				moved = true;
+			}
 			break;
 		case LEFT:
-			if (x() > 0)
+			if (x() > 0) {
 				x(x() - 1);
+				moved = true;
+			}
 			break;
 		case RIGHT:
-			if (x() < (finished ? w-2 : w-1))
+			if (x() < (finished ? w-2 : w-1)) {
 				x(x() + 1);
+				moved = true;
+			}
 			break;
 		}
 		this.life--;
+		return moved;
 	}
 }
