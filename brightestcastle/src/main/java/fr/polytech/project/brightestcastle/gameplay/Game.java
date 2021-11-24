@@ -10,7 +10,7 @@ public class Game {
 	
 	public Game(int w, int h) {
 		map = Map.generate(w, h);
-		pos = map.getStart();
+		pos = map.getStart().cloneCoords();
 	}
 	
 	public Map getMap() {

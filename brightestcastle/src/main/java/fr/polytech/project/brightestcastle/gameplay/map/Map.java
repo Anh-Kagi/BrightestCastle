@@ -63,6 +63,19 @@ public class Map {
 		return true;
 	}
 	
+	public int nbNeighborSquares(Coords c) {
+		int nbNeighbors = 0;
+		if (getSquare(c.x(), c.y()-1) != null)
+			nbNeighbors++;
+		if (getSquare(c.x(), c.y()+1) != null)
+			nbNeighbors++;
+		if (getSquare(c.x()-1, c.y()) != null)
+			nbNeighbors++;
+		if (getSquare(c.x()+1, c.y()) != null)
+			nbNeighbors++;
+		return nbNeighbors;
+	}
+	
 	public static Map generate(int w, int h) {
 		Map map = new Map(w, h);
 		Random rand = new Random();
@@ -71,43 +84,45 @@ public class Map {
 		ants.add(new MazeAnt(0, rand.nextInt(h), map.getWidth(), map.getHeight(), Direction.RIGHT, rand.nextInt(1)+1));
 		
 		map.generateSquare(ants.get(0));
-		map.setStart(ants.get(0).getCoords());
+		map.setStart(ants.get(0).cloneCoords());
 		
 		boolean finished = false;
 		while (ants.size() > 0) {
 			for (int i=0; i<ants.size(); i++) {
 				MazeAnt a = ants.get(i);
-				a.move(finished);
-				if (map.generateSquare(a))
-					ants.remove(a);
+				if (a.move(finished))
+					if (map.generateSquare(a))
+						ants.remove(a);
 				if (a.x() == map.getWidth()-1) {
 					finished = true;
-					map.setEnd(a.getCoords());
+					map.setEnd(a.cloneCoords());
 					ants.remove(a);
 					continue;
 				}
 				
 				if (a.isDead()) {
 					// bifurcation
-					if (a.dir() == Direction.RIGHT) {
-						Stack<Direction> dirs = new Stack<Direction>();
-						if (a.x() < (finished ? map.getWidth()-2 : map.getWidth()-1))
-							dirs.add(Direction.RIGHT);
-						if (a.y() > 0)
-							dirs.add(Direction.UP);
-						if (a.y() < map.getHeight()-1)
-							dirs.add(Direction.DOWN);
-						
-						int nbDirs = rand.nextInt(dirs.size())+1;
-						if (nbDirs < dirs.size())
-							Collections.shuffle(dirs);
-						for (int j=0; j<nbDirs; j++) {
-							MazeAnt na = new MazeAnt(a.x(), a.y(), map.getWidth(), map.getHeight(), dirs.pop(), rand.nextInt(2)+2);
+					if (map.nbNeighborSquares(a) <= 1) {
+						if (a.dir() == Direction.RIGHT) {
+							Stack<Direction> dirs = new Stack<Direction>();
+							if (a.x() < (finished ? map.getWidth()-2 : map.getWidth()-1))
+								dirs.add(Direction.RIGHT);
+							if (a.y() > 0)
+								dirs.add(Direction.UP);
+							if (a.y() < map.getHeight()-1)
+								dirs.add(Direction.DOWN);
+							
+							int nbDirs = rand.nextInt(dirs.size())+1;
+							if (nbDirs < dirs.size())
+								Collections.shuffle(dirs);
+							for (int j=0; j<nbDirs; j++) {
+								MazeAnt na = new MazeAnt(a.x(), a.y(), map.getWidth(), map.getHeight(), dirs.pop(), rand.nextInt(2)+2);
+								ants.add(na);
+							}
+						} else {
+							MazeAnt na = new MazeAnt(a.x(), a.y(), map.getWidth(), map.getHeight(), Direction.RIGHT, rand.nextInt(2)+2);
 							ants.add(na);
 						}
-					} else {
-						MazeAnt na = new MazeAnt(a.x(), a.y(), map.getWidth(), map.getHeight(), Direction.RIGHT, rand.nextInt(2)+2);
-						ants.add(na);
 					}
 					ants.remove(a);
 				}

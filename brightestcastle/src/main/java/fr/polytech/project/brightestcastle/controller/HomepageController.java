@@ -56,6 +56,10 @@ public class HomepageController {
 			return "blank";
 		}
 		
+		// TODO debug
+		if (req.getParameter("reset") != null)
+			req.getSession().setAttribute("game", new Game(12, 6));
+		
 		model.addAttribute("map", ((Game) req.getSession().getAttribute("game")).getMap());
 		model.addAttribute("game", req.getSession().getAttribute("game"));
 		return "grid";
