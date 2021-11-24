@@ -1,4 +1,4 @@
-package fr.polytech.project.brightestcastle.gameplay;
+package fr.polytech.project.brightestcastle.gameplay.map;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,6 +8,8 @@ import java.util.Stack;
 
 public class Map {
 	private Square grid[][];
+	private Coords start;
+	private Coords end;
 	
 	protected Map(int w, int h) {
 		grid = new Square[h][w];
@@ -25,12 +27,32 @@ public class Map {
 		return grid[y][x];
 	}
 	
+	public Square getSquare(Coords c) {
+		return getSquare(c.x(), c.y());
+	}
+	
 	public int getHeight() {
 		return grid.length;
 	}
 	
 	public int getWidth() {
 		return grid[0].length;
+	}
+	
+	private void setStart(Coords start) {
+		this.start = start;
+	}
+	
+	public Coords getStart() {
+		return this.start;
+	}
+	
+	private void setEnd(Coords end) {
+		this.end = end;
+	}
+	
+	public Coords getEnd() {
+		return this.end;
 	}
 	
 	protected boolean generateSquare(Coords c) {
@@ -46,9 +68,10 @@ public class Map {
 		Random rand = new Random();
 		
 		List<MazeAnt> ants = new ArrayList<MazeAnt>();
-		ants.add(new MazeAnt(0, rand.nextInt(h), map.getWidth(), map.getHeight(), Direction.RIGHT, rand.nextInt(2)+2));
+		ants.add(new MazeAnt(0, rand.nextInt(h), map.getWidth(), map.getHeight(), Direction.RIGHT, rand.nextInt(1)+1));
 		
 		map.generateSquare(ants.get(0));
+		map.setStart(ants.get(0).getCoords());
 		
 		boolean finished = false;
 		while (ants.size() > 0) {
@@ -59,6 +82,7 @@ public class Map {
 					ants.remove(a);
 				if (a.x() == map.getWidth()-1) {
 					finished = true;
+					map.setEnd(a.getCoords());
 					ants.remove(a);
 					continue;
 				}

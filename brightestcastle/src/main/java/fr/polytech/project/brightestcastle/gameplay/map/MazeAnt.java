@@ -1,4 +1,4 @@
-package fr.polytech.project.brightestcastle.gameplay;
+package fr.polytech.project.brightestcastle.gameplay.map;
 
 public class MazeAnt extends Coords {
 	private Direction dir;
@@ -11,6 +11,13 @@ public class MazeAnt extends Coords {
 		this.h = h;
 		this.life = life;
 		dir(dir);
+	}
+	
+	public Coords getCoords() {
+		Coords coords = new Coords();
+		coords.x(x());
+		coords.y(y());
+		return coords;
 	}
 	
 	public boolean isDead() {

@@ -1,4 +1,4 @@
-package fr.polytech.project.brightestcastle.gameplay;
+package fr.polytech.project.brightestcastle.gameplay.map;
 
 public class Coords {
 	private int x;
