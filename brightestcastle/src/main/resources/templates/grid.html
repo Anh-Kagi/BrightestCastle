@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Map</title>
+	<style>
+	.cell-room {
+		border: 0.25em solid black;
+	}
+	td {
+		width: 3em;
+		height: 3em;
+	}
+	</style>
+</head>
+
+<body>
+	<table>
+		<tbody>
+			<tr th:each="row : ${#numbers.sequence(0, map.getHeight()-1)}">
+				<td th:each="col : ${#numbers.sequence(0, map.getWidth()-1)}" th:classappend="${map.getSquare(col, row) != null ? 'cell-room' : 'cell-empty'}">
+					<img th:if="${game.getPos().x() == col && game.getPos().y() == row}" src="/img/player.svg"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<form action="/map" method="post">
+		<input type="submit" name="direction" value="UP"/>
+	</form>
+	<form action="/map" method="post">
+		<input type="submit" name="direction" value="DOWN"/>
+	</form>
+	<form action="/map" method="post">
+		<input type="submit" name="direction" value="RIGHT"/>
+	</form>
+	<form action="/map" method="post">
+		<input type="submit" name="direction" value="LEFT"/>
+	</form>
+</body>
+
+</html>
