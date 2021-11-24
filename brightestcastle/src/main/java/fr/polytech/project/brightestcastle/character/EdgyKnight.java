@@ -8,35 +8,35 @@ public class EdgyKnight extends Monster implements Attack{
 	}
 	
 	@Override
-	public int getATK(){
+	public int getATKTemp(){
 		if (getHP()>(getHPMax()/2)) {
-			return super.getATK();
+			return super.getATKTemp();
 		}
 		else {
-			return super.getATK()+2;
+			return super.getATKTemp()+2;
 		}
 	}
 	
 	@Override
-	public int getDEF(){
+	public int getDEFTemp(){
 		if (getHP()>(getHPMax()/2)) {
-			return super.getDEF()+2;
+			return super.getDEFTemp()+2;
 		}
 		else {
-			return super.getDEF();
+			return super.getDEFTemp();
 		}
 	}
 
 	@Override
 	public void attack1(Character[] targets) {
-		targets[0].takeDamageBlinded(getATK());
+		targets[0].takeDamageBlinded(getATKTemp());
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void attack2(Character[] targets) {
-		targets[0].takeDamageBlinded(getATK());
+		targets[0].takeDamageBlinded(getATKTemp());
 		// TODO Auto-generated method stub
 		
 	}

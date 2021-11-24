@@ -1,5 +1,7 @@
 package fr.polytech.project.brightestcastle.character;
 
+import java.util.List;
+
 public class Character {
 	
 	private String name;
@@ -14,8 +16,14 @@ public class Character {
 	private int ATK;
 	private int STA; // same for everyone, regen each turn
 	private int DEF;
+	
+	private int DEFTemp;
+	private int ATKTemp;
+	private int vigorTemp;
 
 	private int Threat;
+	
+	private List <Status> listStatus;
 
 	
 	public Character(String name, CharacterClass job,byte constitution, byte strength, byte vigor) {
@@ -30,7 +38,11 @@ public class Character {
 		this.ATK = 3 + strength;
 		this.STA = 20;
 
-		this.Threat=20;
+		this.setATKTemp(this.ATK);
+		this.setDEFTemp(this.DEF);
+		this.setVigorTemp(this.vigor);
+	
+		this.Threat=0;
 
 	}
 
@@ -102,17 +114,45 @@ public class Character {
 	
 	
 	
+	public int getDEFTemp() {
+		return DEFTemp;
+	}
+
+	public void setDEFTemp(int dEFTemp) {
+		DEFTemp = dEFTemp;
+	}
+
+	public int getATKTemp() {
+		return ATKTemp;
+	}
+
+	public void setATKTemp(int aTKTemp) {
+		ATKTemp = aTKTemp;
+	}
+
+	public int getVigorTemp() {
+		return vigorTemp;
+	}
+
+	public void setVigorTemp(int vigorTemp) {
+		this.vigorTemp = vigorTemp;
+	}
+
 	public int getThreat() {
 		return Threat;
 	}
-
+	
 	public void setThreat(int threat) {
+		Threat=threat;
+	}
+
+	public void addThreat(int threat) {
 		Threat += threat;
 	}
 
 	public int takeDamage(int damage) {
 		
-		int damageInflicted=damage-getDEF();
+		int damageInflicted=damage-getDEFTemp();
 		setHP(getHP()-damageInflicted);
 		
 		return damageInflicted;
@@ -124,7 +164,7 @@ public class Character {
 			return 0;
 		}
 		else {
-			int damageInflicted=damage-getDEF();
+			int damageInflicted=damage-getDEFTemp();
 			setHP(getHP()-damageInflicted);
 			return damageInflicted;
 		}
@@ -136,8 +176,20 @@ public class Character {
 	}
 	
 	public void generateSTA (int vigor) {
-		setSTA(getSTA()+vigor);
+		setSTA(getSTA()+vigorTemp);
 	}
 
+	public List <Status> getListStatus() {
+		return listStatus;
+	}
+
+	public void setListStatus(List <Status> listStatus) {
+		this.listStatus = listStatus;
+	}
+
+	public void addStatus(StatusEnum name, int duration) {
+		Status s= new Status(name, duration);
+		listStatus.add(s);
+	}
 
 }

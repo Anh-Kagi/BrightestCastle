@@ -13,15 +13,15 @@ public class Slime extends Monster implements Attack {
 	
 	@Override
 	public void attack1(Character target[]) {
-		target[0].takeDamageBlinded(getATK());
+		target[0].takeDamageBlinded(getATKTemp());
 		
 	}
 
 	@Override
 	public void attack2(Character target[]) {
 		// TODO Add stun effect	
-		target[0].takeDamage((int) (getATK()));
-		target[1].takeDamage((int) (getATK()));
+		target[0].takeDamage((int) (getATKTemp()));
+		target[1].takeDamage((int) (getATKTemp()));
 	}
 
 

@@ -10,10 +10,10 @@ public class Warrior extends Character implements Attack {
 	}
 	
 	@Override
-	public int getATK(){
+	public int getATKTemp(){
 		int ATK;
 
-		ATK= ((getHPMax() - getHP()) / getHPMax()) * super.getATK() + super.getATK() ;
+		ATK= ((getHPMax() - getHP()) / getHPMax()) * super.getATKTemp() + super.getATKTemp() ;
 
 		return ATK;
 		
@@ -21,16 +21,18 @@ public class Warrior extends Character implements Attack {
 
 	@Override
 	public void attack1(Character target[]) {
-		target[0].takeDamageBlinded(getATK());
-		
+		int threat = target[0].takeDamageBlinded(getATKTemp());
+		addThreat(threat);
 	}
 
 	@Override
 	public void attack2(Character target[]) {
 		// TODO Add stun effect
+		int threat=0;
 		if (getSTA()>=3) {
-			target[0].takeDamageBlinded((int) (1.5*getATK()));
-			target[1].takeDamageBlinded((int) (1.5*getATK()));
+			threat+=target[0].takeDamageBlinded((int) (1.5*getATKTemp()));
+			threat+=target[1].takeDamageBlinded((int) (1.5*getATKTemp()));
+			addThreat(threat);
 			setSTA(getSTA()-3);
 		}else System.out.println("Not enough stamina!");
 		
@@ -45,9 +47,9 @@ public class Warrior extends Character implements Attack {
 	@Override
 	public void attack4(Character target[]) {
 		if(getSTA()==20) {
-			target[0].takeDamageBlinded(getATK()*5);
+			int threat=target[0].takeDamageBlinded(getATKTemp()*5);
 			setSTA(0);
-			setThreat(getATK()*5);
+			addThreat(threat);
 			//TODO add stun effect
 		}
 		else System.out.println("Not enough Stamina!");

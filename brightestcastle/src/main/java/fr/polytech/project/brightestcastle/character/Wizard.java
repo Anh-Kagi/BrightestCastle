@@ -9,7 +9,7 @@ public class Wizard extends Monster implements Attack {
 
 	@Override
 	public void attack1(Character[] targets) {
-		targets[0].takeTrueDamage(getATK());
+		targets[0].takeTrueDamage(getATKTemp());
 		// TODO Auto-generated method stub
 		
 	}
@@ -22,7 +22,7 @@ public class Wizard extends Monster implements Attack {
 
 	@Override
 	public void attack3(Character[] targets) {
-		targets[0].takeTrueDamage((int)(2.5*getATK()));
+		targets[0].takeTrueDamage((int)(2.5*getATKTemp()));
 		// TODO Auto-generated method stub
 		
 	}
@@ -30,7 +30,7 @@ public class Wizard extends Monster implements Attack {
 	@Override
 	public void attack4(Character[] targets) {
 		for (int i=0;i<4;i++) {
-			targets[i].takeDamage(3*getATK());
+			targets[i].takeDamage(3*getATKTemp());
 		}
 		// TODO Auto-generated method stub
 		

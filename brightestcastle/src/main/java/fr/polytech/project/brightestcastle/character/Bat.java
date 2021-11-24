@@ -18,7 +18,7 @@ public class Bat extends Monster implements Attack {
 		}
 		else {
 			
-			int damageInflicted=damage-getDEF();
+			int damageInflicted=damage-getDEFTemp();
 			setHP(getHP()-damageInflicted);
 			return damageInflicted;
 		}
@@ -26,7 +26,7 @@ public class Bat extends Monster implements Attack {
 
 	@Override
 	public void attack1(Character[] targets) {
-		setHP(getHP()+(int)(0.5*targets[0].takeDamageBlinded(getATK())));
+		setHP(getHP()+(int)(0.5*targets[0].takeDamageBlinded(getATKTemp())));
 		// TODO Auto-generated method stub
 		
 	}
@@ -34,7 +34,7 @@ public class Bat extends Monster implements Attack {
 	@Override
 	public void attack2(Character[] targets) {
 		for (int i=0;i<4;i++) {
-			targets[i].takeDamage((int)(0.75*getATK()));
+			targets[i].takeDamage((int)(0.75*getATKTemp()));
 		}
 		// TODO Auto-generated method stub
 		
