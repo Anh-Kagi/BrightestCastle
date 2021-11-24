@@ -1,7 +1,7 @@
 package fr.polytech.project.brightestcastle.character;
 
 public class Paladin extends Character implements Attack {
-	//passive : Taunt => greater threat, threat generation improved by 50%
+	//passive : Taunt => greater threat, threat generation improved by 25%
 
 	
 	public Paladin(String name, CharacterClass job, byte constitution, byte strength, byte vigor) {
@@ -10,14 +10,14 @@ public class Paladin extends Character implements Attack {
 	}
 
 	@Override
-	public void addThreat(int threat) {
-		super.addThreat((int) (threat+ threat*0.5));
+	public void setThreat(int threat) {
+		super.setThreat((int) (threat+ threat*0.25));
 	}
 
 	@Override
 	public void attack1(Character target[]) {
-		int threat =target[0].takeDamage(getATK());
-		addThreat(threat);
+		target[0].takeDamageBlinded(getATK());
+		
 	}
 
 	@Override
@@ -37,12 +37,10 @@ public class Paladin extends Character implements Attack {
 	@Override
 	public void attack4(Character target[]) {
 		if (getSTA()>=10) {
-			int threat=0;
 			for (int i=0;i<4;i++) {
-				threat+=target[i].takeDamage(3*getATK());
+				target[i].takeDamage(3*getATK());
 			}
 			setSTA(getSTA()-10);
-			addThreat(threat);
 		}else System.out.println("Not enough Stamina !");
 	}
 

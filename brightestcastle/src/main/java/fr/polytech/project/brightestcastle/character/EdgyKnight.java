@@ -29,14 +29,14 @@ public class EdgyKnight extends Monster implements Attack{
 
 	@Override
 	public void attack1(Character[] targets) {
-		targets[0].takeDamage(getATK());
+		targets[0].takeDamageBlinded(getATK());
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void attack2(Character[] targets) {
-		targets[0].takeDamage(getATK());
+		targets[0].takeDamageBlinded(getATK());
 		// TODO Auto-generated method stub
 		
 	}

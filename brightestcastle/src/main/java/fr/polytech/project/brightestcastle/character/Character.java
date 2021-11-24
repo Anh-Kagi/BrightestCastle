@@ -1,6 +1,5 @@
 package fr.polytech.project.brightestcastle.character;
 
-
 public class Character {
 	
 	private String name;
@@ -31,7 +30,7 @@ public class Character {
 		this.ATK = 3 + strength;
 		this.STA = 20;
 
-		this.Threat=0;
+		this.Threat=20;
 
 	}
 
@@ -106,13 +105,8 @@ public class Character {
 	public int getThreat() {
 		return Threat;
 	}
-	
+
 	public void setThreat(int threat) {
-		Threat = threat;
-	}
-
-
-	public void addThreat(int threat) {
 		Threat += threat;
 	}
 
@@ -122,6 +116,18 @@ public class Character {
 		setHP(getHP()-damageInflicted);
 		
 		return damageInflicted;
+	}
+	
+	public int takeDamageBlinded(int damage) {
+		if ( Math.random()*100 <=50) {
+			System.out.println("You Missed your attack!");
+			return 0;
+		}
+		else {
+			int damageInflicted=damage-getDEF();
+			setHP(getHP()-damageInflicted);
+			return damageInflicted;
+		}
 	}
 	
 	public int takeTrueDamage(int damage) {

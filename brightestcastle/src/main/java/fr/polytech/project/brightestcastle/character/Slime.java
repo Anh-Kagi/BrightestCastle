@@ -13,7 +13,7 @@ public class Slime extends Monster implements Attack {
 	
 	@Override
 	public void attack1(Character target[]) {
-		target[0].takeDamage(getATK());
+		target[0].takeDamageBlinded(getATK());
 		
 	}
 

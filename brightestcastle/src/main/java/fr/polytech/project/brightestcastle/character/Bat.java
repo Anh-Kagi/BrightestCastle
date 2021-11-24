@@ -26,7 +26,7 @@ public class Bat extends Monster implements Attack {
 
 	@Override
 	public void attack1(Character[] targets) {
-		setHP(getHP()+(int)(0.5*targets[0].takeDamage(getATK())));
+		setHP(getHP()+(int)(0.5*targets[0].takeDamageBlinded(getATK())));
 		// TODO Auto-generated method stub
 		
 	}

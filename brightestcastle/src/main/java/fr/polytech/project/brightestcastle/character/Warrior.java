@@ -1,6 +1,5 @@
 package fr.polytech.project.brightestcastle.character;
 
-
 public class Warrior extends Character implements Attack {
 	// passive= Rage -> attk+ when hp low
 
@@ -22,20 +21,18 @@ public class Warrior extends Character implements Attack {
 
 	@Override
 	public void attack1(Character target[]) {
-		int threat = target[0].takeDamage(getATK());
-		addThreat(threat);
+		target[0].takeDamageBlinded(getATK());
+		
 	}
 
 	@Override
 	public void attack2(Character target[]) {
 		// TODO Add stun effect
-		int threat=0;
 		if (getSTA()>=3) {
-			threat+=target[0].takeDamage((int) (1.5*getATK()));
-			threat+=target[1].takeDamage((int) (1.5*getATK()));
-			addThreat(threat);
-			setSTA(getSTA()-3);	
-		}else System.out.println("Not enough Stamina !");
+			target[0].takeDamageBlinded((int) (1.5*getATK()));
+			target[1].takeDamageBlinded((int) (1.5*getATK()));
+			setSTA(getSTA()-3);
+		}else System.out.println("Not enough stamina!");
 		
 	}
 
@@ -48,10 +45,9 @@ public class Warrior extends Character implements Attack {
 	@Override
 	public void attack4(Character target[]) {
 		if(getSTA()==20) {
-			int threat= target[0].takeDamage(getATK()*5);
+			target[0].takeDamageBlinded(getATK()*5);
 			setSTA(0);
-			addThreat(threat);
-			
+			setThreat(getATK()*5);
 			//TODO add stun effect
 		}
 		else System.out.println("Not enough Stamina!");
