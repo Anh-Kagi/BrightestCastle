@@ -5,6 +5,16 @@
 	<meta charset="UTF-8">
 	<title>Map</title>
 	<style>
+	.cell {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+		justify-content: center;
+	}
+	.cell > * {
+		height: 2em;
+		width: 2em;
+	}
 	.cell-room {
 		border: 0.25em solid black;
 	}
@@ -18,9 +28,9 @@
 		width: 3em;
 		height: 3em;
 	}
-	td > * {
-		width: inherit;
-		height: inherit;
+	button {
+		height: 100%;
+		width: 100%;
 	}
 	</style>
 </head>
@@ -30,7 +40,9 @@
 		<tbody>
 			<tr th:each="row : ${#numbers.sequence(0, map.getHeight()-1)}">
 				<td th:each="col : ${#numbers.sequence(0, map.getWidth()-1)}" th:classappend="${(map.getSquare(col, row) != null ? 'cell-room' : 'cell-empty') + (map.getStart().x() == col && map.getStart().y() == row ? ' cell-start' : '') + (map.getEnd().x() == col && map.getEnd().y()  == row ? ' cell-end' : '')}">
-					<img th:if="${game.getPos().x() == col && game.getPos().y() == row}" src="/img/player.svg"/>
+					<div th:class="cell">
+						<img th:if="${game.getPos().x() == col && game.getPos().y() == row}" src="/img/player.svg"/>
+					</div>
 				</td>
 			</tr>
 		</tbody>

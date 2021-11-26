@@ -58,7 +58,7 @@ public class HomepageController {
 		
 		// TODO debug
 		if (req.getParameter("reset") != null)
-			req.getSession().setAttribute("game", new Game(12, 6));
+			req.getSession().setAttribute("game", new Game(12, 5));
 		
 		model.addAttribute("map", ((Game) req.getSession().getAttribute("game")).getMap());
 		model.addAttribute("game", req.getSession().getAttribute("game"));
