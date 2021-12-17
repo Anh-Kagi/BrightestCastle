@@ -40,5 +40,6 @@ public class Game {
 				getPos().x(getPos().x() + 1);
 			break;
 		}
+		map.getSquare(getPos()).setVisited(true);
 	}
 }

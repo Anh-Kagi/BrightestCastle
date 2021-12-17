@@ -2,19 +2,23 @@ package fr.polytech.project.brightestcastle.gameplay.map;
 
 public class MazeAnt extends Coords {
 	private Direction dir;
-	public int w, h, life;
+	public int w, h, ttl;
 	
 	public MazeAnt() {}
-	public MazeAnt(int x, int y, int w, int h, Direction dir, int life) {
+	public MazeAnt(int x, int y, int w, int h, Direction dir, int ttl) {
 		super(x, y);
 		this.w = w;
 		this.h = h;
-		this.life = life;
+		this.ttl = ttl;
 		dir(dir);
 	}
 	
 	public boolean isDead() {
-		return this.life <= 0;
+		return this.ttl <= 0;
+	}
+	
+	public int getTTL() {
+		return this.ttl;
 	}
 	
 	public void dir(Direction dir) {
@@ -53,7 +57,7 @@ public class MazeAnt extends Coords {
 			}
 			break;
 		}
-		this.life--;
+		this.ttl--;
 		return moved;
 	}
 }

@@ -55,9 +55,9 @@ public class Map {
 		return this.end;
 	}
 	
-	protected boolean generateSquare(Coords c) {
+	protected boolean generateSquare(Coords c, SquareType type) {
 		if (grid[c.y()][c.x()] == null) {
-			grid[c.y()][c.x()] = new Square();
+			grid[c.y()][c.x()] = new Square(type, false);
 			return false;
 		}
 		return true;
@@ -76,6 +76,36 @@ public class Map {
 		return nbNeighbors;
 	}
 	
+	private static void computeDistances(Map map) {
+		List<Coords> cs = new ArrayList<Coords>();
+		
+		cs.add(map.getEnd());
+		int distance = 0;
+		
+		while(!cs.isEmpty()) {
+			for (int i=cs.size()-1; i>=0; i--) {
+				Coords c = cs.get(i);
+				Square s = map.getSquare(c);
+				if (s != null && s.getDistance() == -1)
+					s.setDistance(distance);
+				
+				Coords neighbors[] = {
+					new Coords(c.x()-1, c.y()),
+					new Coords(c.x()+1, c.y()),
+					new Coords(c.x(), c.y()-1),
+					new Coords(c.x(), c.y()+1)
+				};
+				for (Coords cn : neighbors) {
+					Square sn = map.getSquare(cn);
+					if (sn != null && sn.getDistance() == -1)
+						cs.add(new Coords(cn.x(), cn.y()));
+				}
+				cs.remove(i);
+			}
+			distance++;
+		}
+	}
+	
 	public static Map generate(int w, int h) {
 		Map map = new Map(w, h);
 		Random rand = new Random();
@@ -83,15 +113,16 @@ public class Map {
 		List<MazeAnt> ants = new ArrayList<MazeAnt>();
 		ants.add(new MazeAnt(0, rand.nextInt(h), map.getWidth(), map.getHeight(), Direction.RIGHT, rand.nextInt(1)+1));
 		
-		map.generateSquare(ants.get(0));
+		map.generateSquare(ants.get(0), SquareType.EMPTY);
+		map.getSquare(ants.get(0)).setVisited(true);
 		map.setStart(ants.get(0).cloneCoords());
 		
 		boolean finished = false;
 		while (ants.size() > 0) {
-			for (int i=0; i<ants.size(); i++) {
+			for (int i=ants.size()-1; i>=0; i--) {
 				MazeAnt a = ants.get(i);
 				if (a.move(finished))
-					if (map.generateSquare(a))
+					if (map.generateSquare(a, a.isDead() ? (rand.nextFloat() < 0.25 ? SquareType.CAMP : SquareType.LOOT) : SquareType.FIGHT))
 						ants.remove(a);
 				if (a.x() == map.getWidth()-1) {
 					finished = true;
@@ -129,6 +160,8 @@ public class Map {
 			}
 		}
 		
+		map.getSquare(map.getEnd()).setType(SquareType.BOSS);
+		computeDistances(map);
 		return map;	
 	}
 	
