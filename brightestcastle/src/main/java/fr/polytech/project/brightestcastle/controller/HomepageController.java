@@ -56,7 +56,7 @@ public class HomepageController {
 			return "blank";
 		}
 		
-		// TODO debug
+		// TODO remove for prod
 		if (req.getParameter("reset") != null)
 			req.getSession().setAttribute("game", new Game(12, 5));
 		

@@ -3,11 +3,11 @@ package fr.polytech.project.brightestcastle.gameplay;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.polytech.project.brightestcastle.character.Bat;
-import fr.polytech.project.brightestcastle.character.EdgyKnight;
-import fr.polytech.project.brightestcastle.character.Monster;
-import fr.polytech.project.brightestcastle.character.Slime;
-import fr.polytech.project.brightestcastle.character.Wizard;
+import fr.polytech.project.brightestcastle.entity.Bat;
+import fr.polytech.project.brightestcastle.entity.EdgyKnight;
+import fr.polytech.project.brightestcastle.entity.Monster;
+import fr.polytech.project.brightestcastle.entity.Slime;
+import fr.polytech.project.brightestcastle.entity.Wizard;
 
 public class Battle {
 	public static List<Monster> battleGenerate (long dist){

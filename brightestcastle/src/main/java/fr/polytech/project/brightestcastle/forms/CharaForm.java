@@ -1,16 +1,18 @@
 package fr.polytech.project.brightestcastle.forms;
 
+import fr.polytech.project.brightestcastle.entity.CharacterJob;
+
 public class CharaForm {
 	private String name;
 	
-	private Job job;
+	private CharacterJob job;
 	
 	private byte CON;
 	private byte STR;
 	private byte VIG;
 	
 	public CharaForm() {}
-	public CharaForm(String name, Job job, byte CON, byte STR, byte VIG) {
+	public CharaForm(String name, CharacterJob job, byte CON, byte STR, byte VIG) {
 		setName(name);
 		setJob(job);
 		setCON(CON);
@@ -26,11 +28,11 @@ public class CharaForm {
 		return this.name;
 	}
 	
-	public void setJob(Job job) {
+	public void setJob(CharacterJob job) {
 		this.job = job;
 	}
 	
-	public Job getJob() {
+	public CharacterJob getJob() {
 		return this.job;
 	}
 	
