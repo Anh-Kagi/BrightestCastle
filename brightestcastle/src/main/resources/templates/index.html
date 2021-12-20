@@ -19,7 +19,7 @@
 		<label>Job:</label>
 		<select th:field="*{job}">
 			<option value=""> -- </option>
-			<option th:each="job : ${T(fr.polytech.project.brightestcastle.forms.Job).values()}" th:value="${job}" th:text="${job}"></option>
+			<option th:each="job : ${T(fr.polytech.project.brightestcastle.entity.CharacterJob).values()}" th:value="${job}" th:text="${job}"></option>
 		</select>
 		<br/>
 		
