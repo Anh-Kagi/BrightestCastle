@@ -122,7 +122,7 @@ public class Map {
 			for (int i=ants.size()-1; i>=0; i--) {
 				MazeAnt a = ants.get(i);
 				if (a.move(finished))
-					if (map.generateSquare(a, a.isDead() ? (rand.nextFloat() < 0.25 ? SquareType.CAMP : SquareType.LOOT) : SquareType.FIGHT))
+					if (map.generateSquare(a, a.isDead() ? SquareType.CAMP : (rand.nextFloat() < 0.25 ? SquareType.LOOT : SquareType.FIGHT)))
 						ants.remove(a);
 				if (a.x() == map.getWidth()-1) {
 					finished = true;

@@ -3,6 +3,7 @@ package fr.polytech.project.brightestcastle.gameplay;
 import fr.polytech.project.brightestcastle.gameplay.map.Coords;
 import fr.polytech.project.brightestcastle.gameplay.map.Direction;
 import fr.polytech.project.brightestcastle.gameplay.map.Map;
+import fr.polytech.project.brightestcastle.gameplay.map.Square;
 
 public class Game {
 	private Map map;
@@ -21,7 +22,7 @@ public class Game {
 		return this.pos;
 	}
 	
-	public void move(Direction dir) {
+	public boolean move(Direction dir) {
 		switch(dir) {
 		case UP:
 			if (getMap().getSquare(getPos().x(), getPos().y()-1) != null)
@@ -40,6 +41,10 @@ public class Game {
 				getPos().x(getPos().x() + 1);
 			break;
 		}
-		map.getSquare(getPos()).setVisited(true);
+		return map.getSquare(getPos()).getVisited();
+	}
+	
+	public Square getSquare() {
+		return getMap().getSquare(getPos());
 	}
 }
