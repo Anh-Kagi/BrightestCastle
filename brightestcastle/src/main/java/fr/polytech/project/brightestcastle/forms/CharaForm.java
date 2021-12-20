@@ -2,6 +2,10 @@ package fr.polytech.project.brightestcastle.forms;
 
 import fr.polytech.project.brightestcastle.entity.CharacterJob;
 
+/**
+ * The class holding the data from the character creation form.
+ * @see CreationController 
+ */
 public class CharaForm {
 	private String name;
 	
@@ -60,6 +64,9 @@ public class CharaForm {
 		return this.VIG;
 	}
 	
+	/**
+	 * @return the validity of the data stored in the {@link CharaForm}
+	 */
 	public boolean isValid() {
 		boolean maxCON = CON >= 0 && CON <= 5;
 		boolean maxSTR = STR >= 0 && STR <= 5;
