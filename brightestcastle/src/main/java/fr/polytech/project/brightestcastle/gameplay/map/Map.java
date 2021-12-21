@@ -64,6 +64,49 @@ public class Map {
 	}
 	
 	/**
+	 * Returns the visibility of the target {@link Square}.<br>
+	 * {@link Square} is visible if non-{@code null}
+	 * and at least one direct neighbor is visited.
+	 * 
+	 * @param x x-coordinate of the {@link Square}
+	 * @param y y-coordinate of the {@link Square}
+	 * @return if the {@link Square} is visible
+	 * @see Square
+	 * @see Square#getVisited()
+	 */
+	public boolean getVisible(int x, int y) {
+		Square s = getSquare(x, y);
+		if (s == null)
+			return false;
+		
+		if (s.getVisited())
+			return true;
+		
+		boolean neighbor_visited = false;
+		for (Coords nc : Coords.getNeighbors(x, y)) {
+			Square neighbor = getSquare(nc);
+			if (neighbor != null && neighbor.getVisited()) {
+				neighbor_visited = true;
+				break;
+			}
+		}
+		return neighbor_visited;
+	}
+	
+	/**
+	 * Shortcut for {@link Map#getVisible(int, int)}.
+	 * 
+	 * @param c the {@link Coords} of the {@link Square}
+	 * @return if the {@link Square} is visible
+	 * @see Square
+	 * @see Coords
+	 * @see Map#getVisible(int, int)
+	 */
+	public boolean getVisible(Coords c) {
+		return getVisible(c.x(), c.y());
+	}
+	
+	/**
 	 * @return {@link Map}'s height 
 	 */
 	public int getHeight() {
