@@ -13,13 +13,15 @@ import fr.polytech.project.brightestcastle.gameplay.Game;
 @Controller
 public class EventController {
 	@GetMapping(path="/event")
-	public String event(HttpServletResponse res, HttpSession session) throws IOException {
+	public String event(HttpSession session, HttpServletResponse res) throws IOException {
+		// if player didn't start a game
 		Game game = (Game) session.getAttribute("game");
 		if (game == null) {
 			res.sendRedirect("/");
 			return "blank";
 		}
 		
+		// if the current event has already been triggered
 		if (game.getSquare().getVisited()) {
 			res.sendRedirect("/map");
 			return "blank";
@@ -31,13 +33,13 @@ public class EventController {
 			game.getSquare().setVisited(true);
 			return "blank";
 		case BOSS:
-			res.sendRedirect("/map");
-			game.getSquare().setVisited(true);
+			res.sendRedirect("/map"); // tmp
+			game.getSquare().setVisited(true); //tmp
 			// TODO: boss fight
 			return "blank";
 		case FIGHT:
-			res.sendRedirect("/map");
-			game.getSquare().setVisited(true);
+			res.sendRedirect("/map"); // tmp
+			game.getSquare().setVisited(true); // tmp
 			// TODO: fight
 			return "blank";
 		case LOOT:

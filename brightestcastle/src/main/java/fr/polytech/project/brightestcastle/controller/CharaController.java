@@ -2,8 +2,8 @@ package fr.polytech.project.brightestcastle.controller;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +16,14 @@ import fr.polytech.project.brightestcastle.gameplay.Game;
 @Controller
 public class CharaController {
 	@PostMapping(path="/chara")
-	public String chara(HttpServletRequest req, HttpServletResponse res, @ModelAttribute CharaForm form, Model model) throws IOException {
-		req.getSession().setAttribute("chara", form);
+	public String chara(HttpSession session, HttpServletResponse res, @ModelAttribute CharaForm form, Model model) throws IOException {
+		// if player already started a game
+		if (session.getAttribute("game") != null) {
+			res.sendRedirect("/map");
+			return "blank";
+		}
+		// if the data the player sent is invalid
+		session.setAttribute("chara", form);
 		if (!form.isValid()) {
 			res.setStatus(302);
 			res.sendRedirect("/?invalid");
@@ -25,7 +31,7 @@ public class CharaController {
 		}
 
 		model.addAttribute("chara", form);
-		req.getSession().setAttribute("game", new Game(12, 6));
+		session.setAttribute("game", new Game(12, 6));
 		return "chara";
 	}
 }
