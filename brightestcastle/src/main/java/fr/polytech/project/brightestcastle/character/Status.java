@@ -4,7 +4,7 @@ public class Status {
 	
 	private StatusEnum name;
 	
-	private String effect;
+
 
 	private int duration;
 	
@@ -14,35 +14,41 @@ public class Status {
 		this.name = name;
 		this.duration = duration;
 		
-		switch(name) {
 		
-		case POISONNED:
-			break;
-			
-		case STUNNED:
-			break;
-			
-		case BLINDED:
-			break;
+
+	}
+
+
+	public StatusEnum getName() {
+		return name;
+	}
+
+
+	public void setName(StatusEnum name) {
+		this.name = name;
+	}
+
+
+
+	public int getDuration() {
+		return duration;
+	}
+
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+
+
+	public void addDuration(int duration) {
+		this.duration+=duration;
 		
-		case ATKUP:
-			break;
-			
-		case ATKDOWN:
-			break;
-			
-		case VIGORUP:
-			break;
-			
-		case VIGORDOWN:
-			break;
+	}
+
+
+	public void countDown() {
+		this.duration-=1;
 		
-		default:
-			break;
-		
-	
-		
-		}
 	}
 	
 	

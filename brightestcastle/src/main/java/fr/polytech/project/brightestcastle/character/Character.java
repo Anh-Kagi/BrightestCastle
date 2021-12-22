@@ -111,9 +111,7 @@ public class Character {
 	public void setDEF(int dEF) {
 		DEF = dEF;
 	}
-	
-	
-	
+		
 	public int getDEFTemp() {
 		return DEFTemp;
 	}
@@ -187,9 +185,131 @@ public class Character {
 		this.listStatus = listStatus;
 	}
 
-	public void addStatus(StatusEnum name, int duration) {
-		Status s= new Status(name, duration);
-		listStatus.add(s);
+	public int alreadyAffected(StatusEnum status) {
+		int pos=-1;
+		for (int i=0; i< listStatus.size(); i++) {
+			if(listStatus.get(i).getName()==status) pos=i;
+		}
+		return pos; 
+	}
+	
+	public void addStatus(StatusEnum status, int duration) {
+		int pos=alreadyAffected(status);
+		if(pos==-1) {
+			Status s= new Status(status, duration);
+			listStatus.add(s);
+			switch(status) {
+			
+			case POISONNED://poison doesn't deal damage yet, only during the status update
+				break;
+				
+			case STUNNED:
+				break;
+				
+			case BLINDED://?
+				break;
+			
+			case ATKUP://+2 ATK
+				setATKTemp(getATKTemp()+2);
+				break;
+				
+			case ATKDOWN://-2 ATK, cannot go under 1
+				
+				if(getATKTemp()<=2) {
+					setATKTemp(1);
+				}
+				else {
+					setATKTemp(getATKTemp()-2);
+				}
+				break;
+				
+			case VIGORUP://+3 vigor
+				setVigorTemp(getVigor()+3);
+				break;
+				
+			case VIGORDOWN://-3 vigor, cannot go under 1
+				if(getVigorTemp()<=3) {
+					setVigorTemp(1);
+				}
+				else {
+					setVigorTemp(getVigorTemp()-3);
+				}
+				break;
+			
+			default:
+				break;
+
+			}
+		}
+		else {
+			listStatus.get(pos).addDuration(duration);
+		}
+	}
+	
+	public void returnToNormal(StatusEnum status) {
+		switch(status) {
+		
+		case POISONNED:
+			break;
+			
+		case STUNNED:
+			break;
+			
+		case BLINDED:
+			break;
+		
+		case ATKUP:
+			setATKTemp(getATKTemp()-2);
+			break;
+			
+		case ATKDOWN:
+			
+			if(getATK()==1 && getATKTemp()<=2) {
+				setATKTemp(1);
+			}
+			else if(getATK()==2 && getATKTemp()<=2) {
+				setATKTemp(2);
+			}
+			else {
+				setATKTemp(getATKTemp()+2);
+			}
+			break;
+			
+		case VIGORUP://+3 vigor
+			setVigorTemp(getVigor()-3);
+			break;
+			
+		case VIGORDOWN://-3 vigor, cannot go under 1
+			if(getVigor()==1 && getVigorTemp()<=3) {
+				setVigorTemp(1);
+			}
+			else if (getVigor()==2 && getVigorTemp()<=3) {
+				setVigorTemp(2);
+			}
+			else {
+				setVigorTemp(getVigorTemp()-3);
+			}
+			break;
+		
+		default:
+			break;
+
+		}
 	}
 
+	public void statusUpdate() {
+		for(int i=0; i<listStatus.size();i++) {
+			
+			listStatus.get(i).countDown();
+			if(listStatus.get(i).getName()==StatusEnum.POISONNED){
+				takeTrueDamage(5);
+			}
+			if(listStatus.get(i).getDuration()==0) {
+				returnToNormal(listStatus.get(i).getName());
+				listStatus.remove(i);
+				i-=1;
+			}
+		}
+	}
+	
 }

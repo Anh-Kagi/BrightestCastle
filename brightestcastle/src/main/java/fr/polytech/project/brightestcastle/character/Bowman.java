@@ -57,7 +57,7 @@ public class Bowman extends Character implements Attack{
 	public void attack4(Character[] target) {
 		if (getSTA()>=5) {
 			int threat =target[0].takeDamageBlinded(getATKTemp()*2);
-			//TODO add debuf
+			target[0].addStatus(StatusEnum.DEFDOWN, 3);
 			setSTA(getSTA()-5);
 			addThreat(threat);
 		} else System.out.println("Not enough Stamina!");

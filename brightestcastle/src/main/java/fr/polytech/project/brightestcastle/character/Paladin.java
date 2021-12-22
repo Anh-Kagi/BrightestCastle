@@ -22,7 +22,9 @@ public class Paladin extends Character implements Attack {
 
 	@Override
 	public void attack2(Character target[]) {
-		// TODO Auto-generated method stub
+		for(int i = 0; i<target.length;i++) {
+			target[i].addStatus(StatusEnum.DEFUP, 2);
+		}
 		
 	}
 

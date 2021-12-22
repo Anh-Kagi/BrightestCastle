@@ -27,9 +27,13 @@ public class Warrior extends Character implements Attack {
 
 	@Override
 	public void attack2(Character target[]) {
-		// TODO Add stun effect
+		
 		int threat=0;
 		if (getSTA()>=3) {
+			if(Math.random()*100 <=25) {
+				target[0].addStatus(StatusEnum.STUNNED, 1);
+				target[1].addStatus(StatusEnum.STUNNED, 1);
+			}
 			threat+=target[0].takeDamageBlinded((int) (1.5*getATKTemp()));
 			threat+=target[1].takeDamageBlinded((int) (1.5*getATKTemp()));
 			addThreat(threat);
@@ -40,8 +44,9 @@ public class Warrior extends Character implements Attack {
 
 	@Override
 	public void attack3(Character target[]) {
-		// TODO Auto-generated method stub
-		
+		for(int i=0;i<target.length;i++) {
+			target[i].addStatus(StatusEnum.ATKDOWN, 2);
+		}
 	}
 
 	@Override
@@ -50,7 +55,8 @@ public class Warrior extends Character implements Attack {
 			int threat=target[0].takeDamageBlinded(getATKTemp()*5);
 			setSTA(0);
 			addThreat(threat);
-			//TODO add stun effect
+			target[0].addStatus(StatusEnum.STUNNED, 1);
+		
 		}
 		else System.out.println("Not enough Stamina!");
 		
