@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Brightest Castle - Red Coverall</title>
+	<style>
+	group {
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	</style>
+</head>
+<body>
+	<h1>Battle</h1>
+	
+	<!-- TODO: display battlemap (characters & enemies) -->
+	<div class="group">
+		<div th:each="chara : ${battle.getCharacters()}">
+			<div th:text="${chara.entity().toString()}"></div>
+			<div th:text="${chara.getPlayed()}"></div>
+		</div>
+	</div>
+	
+	<hr/>
+	
+	<div class="group">
+		<div th:each="monster : ${battle.getMonsters()}">
+			<div th:text="${monster.entity().getType().name()}"></div>
+			<div th:text="${monster.getPlayed()}"></div>
+		</div> 
+	</div>
+	
+	<div>
+		<form action="/battle" method="post">
+			<input type="hidden" name="endturn"/>
+			<input type="submit" value="end turn?"/>
+		</form>
+	</div>
+</body>
+</html>

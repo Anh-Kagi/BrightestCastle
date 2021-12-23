@@ -1,10 +1,11 @@
 package fr.polytech.project.brightestcastle.forms;
 
+import fr.polytech.project.brightestcastle.controller.CreationController;
 import fr.polytech.project.brightestcastle.entity.CharacterJob;
 
 /**
  * The class holding the data from the character creation form.
- * @see CreationController 
+ * @see CreationController
  */
 public class CharaForm {
 	private String name;

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import fr.polytech.project.brightestcastle.gameplay.Battle;
 import fr.polytech.project.brightestcastle.gameplay.Game;
 
 @Controller
@@ -27,6 +28,12 @@ public class EventController {
 			return "blank";
 		}
 		
+		// if a battle already started
+		if (session.getAttribute("battle") != null) {
+			res.sendRedirect("/battle");
+			return "blank";
+		}
+		
 		switch(game.getSquare().getType()) {
 		case EMPTY:
 			res.sendRedirect("/map");
@@ -38,9 +45,9 @@ public class EventController {
 			// TODO: boss fight
 			return "blank";
 		case FIGHT:
-			res.sendRedirect("/map"); // tmp
-			game.getSquare().setVisited(true); // tmp
-			// TODO: fight
+			// TODO: add player's characters
+			session.setAttribute("battle", Battle.generate(game.getSquare().getDistance()));
+			res.sendRedirect("/battle");
 			return "blank";
 		case LOOT:
 			// TODO: give loot
