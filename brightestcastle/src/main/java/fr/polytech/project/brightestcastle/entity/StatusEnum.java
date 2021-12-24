@@ -1,7 +1,5 @@
-package fr.polytech.project.brightestcastle.character;
+package fr.polytech.project.brightestcastle.entity;
 
 public enum StatusEnum {
-
 	STUNNED, POISONNED, BLINDED, ATKUP, ATKDOWN, DEFUP, DEFDOWN, VIGORUP, VIGORDOWN;
-	
 }

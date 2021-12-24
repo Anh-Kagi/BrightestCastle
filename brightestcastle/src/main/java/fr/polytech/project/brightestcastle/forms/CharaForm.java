@@ -1,16 +1,23 @@
 package fr.polytech.project.brightestcastle.forms;
 
+import fr.polytech.project.brightestcastle.controller.CreationController;
+import fr.polytech.project.brightestcastle.entity.CharacterJob;
+
+/**
+ * The class holding the data from the character creation form.
+ * @see CreationController
+ */
 public class CharaForm {
 	private String name;
 	
-	private Job job;
+	private CharacterJob job;
 	
 	private byte CON;
 	private byte STR;
 	private byte VIG;
 	
 	public CharaForm() {}
-	public CharaForm(String name, Job job, byte CON, byte STR, byte VIG) {
+	public CharaForm(String name, CharacterJob job, byte CON, byte STR, byte VIG) {
 		setName(name);
 		setJob(job);
 		setCON(CON);
@@ -26,11 +33,11 @@ public class CharaForm {
 		return this.name;
 	}
 	
-	public void setJob(Job job) {
+	public void setJob(CharacterJob job) {
 		this.job = job;
 	}
 	
-	public Job getJob() {
+	public CharacterJob getJob() {
 		return this.job;
 	}
 	
@@ -58,6 +65,9 @@ public class CharaForm {
 		return this.VIG;
 	}
 	
+	/**
+	 * @return the validity of the data stored in the {@link CharaForm}
+	 */
 	public boolean isValid() {
 		boolean maxCON = CON >= 0 && CON <= 5;
 		boolean maxSTR = STR >= 0 && STR <= 5;
