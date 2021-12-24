@@ -66,9 +66,20 @@ public abstract class Entity {
 		return ATK;
 	}
 	
+	public int getATKmod() {
+		int mod = 0;
+		
+		if (isAffected(StatusEnum.ATKUP))
+			mod += 2;
+		
+		if (getATKbase() >= 2+1 && isAffected(StatusEnum.ATKDOWN))
+			mod -= 2;
+		
+		return mod;
+	}
+	
 	public int getATK() {
-		// TODO: return ATK + modifiers (by overriding or with status)
-		return getATKbase();
+		return getATKbase() + getATKmod();
 	}
 	
 	public void setSTA(int STA) {
@@ -130,9 +141,20 @@ public abstract class Entity {
 		return VIG;
 	}
 	
+	public byte getVIGmod() {
+		byte mod = 0;
+		
+		if (isAffected(StatusEnum.VIGORUP))
+			mod += 3;
+		
+		if (getVIGbase() >= 3+1 && isAffected(StatusEnum.VIGORDOWN))
+			mod -= 3;
+	
+		return mod;
+	}
+	
 	public byte getVIG() {
-		// TODO: return VIG + modifiers (by overriding or with status)
-		return getVIG();
+		return (byte) (getVIGbase() + getVIGmod());
 	}
 
 	public int getThreat() {
@@ -179,10 +201,37 @@ public abstract class Entity {
 	public void setListStatus(List<Status> status) {
 		this.status = status;
 	}
+	
+	public boolean isAffected(StatusEnum status) {
+		return getAffected(status) != -1;
+	}
 
-	public void addStatus(StatusEnum name, int duration) {
-		Status s = new Status(name, duration);
-		status.add(s);
+	public int getAffected(StatusEnum status) {
+		for (int i=0; i<this.status.size(); i++)
+			if(this.status.get(i).getName() == status)
+				return i;
+		return -1;
+	}
+	
+	public void addStatus(StatusEnum status, int duration) {
+		int pos = getAffected(status);
+		
+		if (pos == -1)
+			this.status.add(new Status(status, duration));
+		else
+			this.status.get(pos).addDuration(duration);
+	}
+
+	public void statusUpdate() {
+		for(int i=this.status.size()-1; i>=0; i--) {
+			this.status.get(i).countDown();
+			
+			if(this.status.get(i).getName() == StatusEnum.POISONNED)
+				takeTrueDamage(5);
+			
+			if (this.status.get(i).getDuration() == 0)
+				this.status.remove(i);
+		}
 	}
 
 	public abstract Attack[] getAttacks();

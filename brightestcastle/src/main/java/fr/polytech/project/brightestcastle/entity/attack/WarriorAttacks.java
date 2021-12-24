@@ -1,6 +1,7 @@
 package fr.polytech.project.brightestcastle.entity.attack;
 
 import fr.polytech.project.brightestcastle.entity.Entity;
+import fr.polytech.project.brightestcastle.entity.StatusEnum;
 
 public abstract class WarriorAttacks {
 	public static class BASH extends Attack {
@@ -20,9 +21,12 @@ public abstract class WarriorAttacks {
 		}
 		
 		public void attack(Entity[] targets) {
-			// TODO Add stun effect
 			int threat=0;
 			if (getSender().getSTA() >= 3) {
+				if (Math.random() < 0.25) {
+					targets[0].addStatus(StatusEnum.STUNNED, 1);
+					targets[1].addStatus(StatusEnum.STUNNED, 1);
+				}
 				threat += targets[0].takeDamageBlinded((int) (1.5*getSender().getATK()));
 				threat += targets[1].takeDamageBlinded((int) (1.5*getSender().getATK()));
 				getSender().addThreat(threat);
@@ -36,7 +40,10 @@ public abstract class WarriorAttacks {
 			super(sender, "INTIMIDATE", "Shout a war cry that affects every foes, diminishes their ATK by 25% for 2 turns");
 		}
 		
-		public void attack(Entity[] targets) {}
+		public void attack(Entity[] targets) {
+			for (int i=0; i<targets.length; i++)
+				targets[i].addStatus(StatusEnum.STUNNED, 2);
+		}
 	}
 	
 	public static class OBLITERATE extends Attack {
@@ -49,7 +56,7 @@ public abstract class WarriorAttacks {
 				int threat = targets[0].takeDamageBlinded(getSender().getATK()*5);
 				getSender().setSTA(0);
 				getSender().addThreat(threat);
-				//TODO add stun effect
+				targets[0].addStatus(StatusEnum.STUNNED, 1);
 			} else System.out.println("Not enough Stamina!");
 		}
 	}

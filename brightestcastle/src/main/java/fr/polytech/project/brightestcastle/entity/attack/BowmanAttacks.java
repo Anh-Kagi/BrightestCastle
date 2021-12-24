@@ -3,6 +3,7 @@ package fr.polytech.project.brightestcastle.entity.attack;
 import java.util.concurrent.ThreadLocalRandom;
 
 import fr.polytech.project.brightestcastle.entity.Entity;
+import fr.polytech.project.brightestcastle.entity.StatusEnum;
 
 public abstract class BowmanAttacks {
 	public static class SHOT extends Attack {
@@ -59,7 +60,7 @@ public abstract class BowmanAttacks {
 		public void attack(Entity[] targets) {
 			if (getSender().getSTA()>=5) {
 				int threat = targets[0].takeDamageBlinded(getSender().getATK()*2);
-				//TODO add debuf
+				targets[0].addStatus(StatusEnum.DEFDOWN, 3);
 				getSender().setSTA(getSender().getSTA()-5);
 				getSender().addThreat(threat);
 			} else System.out.println("Not enough Stamina!");

@@ -1,6 +1,7 @@
 package fr.polytech.project.brightestcastle.entity.attack;
 
 import fr.polytech.project.brightestcastle.entity.Entity;
+import fr.polytech.project.brightestcastle.entity.StatusEnum;
 
 public abstract class PaladinAttacks {
 	public static class SLASH extends Attack {
@@ -19,7 +20,10 @@ public abstract class PaladinAttacks {
 			super(sender, "RALLY", "Inspire the allies in order to boost their defense by 25% for 2 turns");
 		}
 		
-		public void attack(Entity[] targets) {}
+		public void attack(Entity[] targets) {
+			for (int i=0; i<targets.length; i++)
+				targets[i].addStatus(StatusEnum.DEFUP, 2); // TODO: targets can be friends?
+		}
 	}
 	
 	public static class PRAYER extends Attack {
