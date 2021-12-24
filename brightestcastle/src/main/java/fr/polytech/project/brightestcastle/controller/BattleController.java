@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.polytech.project.brightestcastle.gameplay.Battle;
+import fr.polytech.project.brightestcastle.gameplay.Played;
+import fr.polytech.project.brightestcastle.entity.Character;
+import fr.polytech.project.brightestcastle.entity.Monster;
 
 @Controller
 public class BattleController {
@@ -45,8 +48,12 @@ public class BattleController {
 					return "blank";
 				}
 			}
-		} else {
-			// do something
+			
+			// reset played
+			for (Played<Character> c : battle.getCharacters())
+				c.setPlayed(false);
+			for (Played<Monster> m : battle.getMonsters())
+				m.setPlayed(true);
 		}
 		return "blank";
 	}
