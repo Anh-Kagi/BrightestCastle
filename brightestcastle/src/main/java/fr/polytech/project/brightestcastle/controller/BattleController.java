@@ -48,13 +48,9 @@ public class BattleController {
 					return "blank";
 				}
 			}
-			
-			// reset played
-			for (Played<Character> c : battle.getCharacters())
-				c.setPlayed(false);
-			for (Played<Monster> m : battle.getMonsters())
-				m.setPlayed(true);
 		}
+		
+		res.sendRedirect("/battle");
 		return "blank";
 	}
 }

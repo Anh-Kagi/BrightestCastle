@@ -1,7 +1,11 @@
 package fr.polytech.project.brightestcastle.forms;
 
 import fr.polytech.project.brightestcastle.controller.CreationController;
+import fr.polytech.project.brightestcastle.entity.Character;
+import fr.polytech.project.brightestcastle.entity.Bowman;
 import fr.polytech.project.brightestcastle.entity.CharacterJob;
+import fr.polytech.project.brightestcastle.entity.Paladin;
+import fr.polytech.project.brightestcastle.entity.Warrior;
 
 /**
  * The class holding the data from the character creation form.
@@ -80,5 +84,21 @@ public class CharaForm {
 		boolean validName = (name != null && !name.isEmpty());
 		
 		return maxCON && maxSTR && maxVIG && maxPts && validJob && validName;
+	}
+	
+	public Character toCharacter() {
+		Character chara = null;
+		switch (getJob()) {
+		case BOWMAN:
+			chara = new Bowman(getName(), getSTR(), getCON(), getVIG());
+			break;
+		case PALADIN:
+			chara = new Paladin(getName(), getSTR(), getCON(), getVIG());
+			break;
+		case WARRIOR:
+			chara = new Warrior(getName(), getSTR(), getCON(), getVIG());
+			break;
+		}
+		return chara;
 	}
 }

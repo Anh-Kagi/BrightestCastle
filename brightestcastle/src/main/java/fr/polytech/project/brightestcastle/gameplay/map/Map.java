@@ -347,8 +347,41 @@ public class Map {
 			}
 		}
 		
+		System.out.println(map); // TODO: tmp debug
 		map.setEnd(end);
 		map.getSquare(map.getEnd()).setType(SquareType.BOSS);
+		System.out.println(map); // TODO: tmp debug
 		return map;	
+	}
+	
+	@Override
+	public String toString() {
+		String s = "";
+		for (int y=0; y<getHeight(); y++) {
+			for (int x=0; x<getWidth(); x++) {
+				if (getSquare(x, y) != null)
+					switch(getSquare(x, y).getType()) {
+					case EMPTY:
+						s += "E";
+						break;
+					case FIGHT:
+						s += "F";
+						break;
+					case BOSS:
+						s += "B";
+						break;
+					case CAMP:
+						s += "C";
+						break;
+					case LOOT:
+						s += "L";
+						break;	
+					}
+				else
+					s += " ";
+			}
+			s += "\r\n";
+		}
+		return s;
 	}
 }

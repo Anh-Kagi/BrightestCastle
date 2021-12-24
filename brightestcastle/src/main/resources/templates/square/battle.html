@@ -4,9 +4,13 @@
 	<meta charset="UTF-8">
 	<title>Brightest Castle - Red Coverall</title>
 	<style>
-	group {
+	.group {
 		display: flex;
 		flex-flow: row nowrap;
+	}
+	.group > * {
+		padding: 1em;
+		border: 1px solid black;
 	}
 	</style>
 </head>
@@ -16,17 +20,18 @@
 	<!-- TODO: display battlemap (characters & enemies) -->
 	<div class="group">
 		<div th:each="chara : ${battle.getCharacters()}">
-			<div th:text="${chara.entity().toString()}"></div>
-			<div th:text="${chara.getPlayed()}"></div>
+			<div th:text="${chara.entity().getJob().name()}"></div>
+			<div>played: <span th:text="${chara.getPlayed()}"></span></div>
 		</div>
-	</div>
-	
-	<hr/>
-	
-	<div class="group">
+		
+		<div>
+			VS
+		</div>
+		
 		<div th:each="monster : ${battle.getMonsters()}">
 			<div th:text="${monster.entity().getType().name()}"></div>
-			<div th:text="${monster.getPlayed()}"></div>
+			
+			<div>played: <span th:text="${monster.getPlayed()}"></span></div>
 		</div> 
 	</div>
 	

@@ -1,5 +1,9 @@
 package fr.polytech.project.brightestcastle.gameplay;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.gameplay.map.Coords;
 import fr.polytech.project.brightestcastle.gameplay.map.Direction;
 import fr.polytech.project.brightestcastle.gameplay.map.Map;
@@ -9,8 +13,10 @@ public class Game {
 	private Map map;
 	private Coords pos;
 	
+	private final List<Character> group = new ArrayList<Character>();
+	
 	/**
-	 * Generate a {@link Map} with the given dimensions.
+	 * Generates a {@link Map} with the given dimensions.
 	 * 
 	 * @param w {@link Map} width
 	 * @param h {@link Map} height
@@ -37,6 +43,15 @@ public class Game {
 	 */
 	public Coords getPos() {
 		return this.pos;
+	}
+	
+	/**
+	 * Shortcut for {@code getMap().getSquare(getPos())}.
+	 * 
+	 * @return current square
+	 */
+	public Square getSquare() {
+		return getMap().getSquare(getPos());
 	}
 	
 	/**
@@ -69,11 +84,9 @@ public class Game {
 	}
 	
 	/**
-	 * Shortcut for {@code getMap().getSquare(getPos())}.
-	 * 
-	 * @return current square
+	 * @return a {@link List} containing the player's {@link Character}s
 	 */
-	public Square getSquare() {
-		return getMap().getSquare(getPos());
+	public List<Character> getGroup() {
+		return group;
 	}
 }

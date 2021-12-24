@@ -2,8 +2,6 @@ package fr.polytech.project.brightestcastle.entity;
 
 import java.util.List;
 
-import fr.polytech.project.brightestcastle.entity.attack.Attack;
-
 public abstract class Entity {
 	private String name;
 
@@ -16,8 +14,6 @@ public abstract class Entity {
 	private int ATK;
 	private int DEF;
 	private int STA; // same for everyone, regen each turn
-	
-	private int threat;
 
 	private List <Status> status;
 	
@@ -156,18 +152,6 @@ public abstract class Entity {
 	public byte getVIG() {
 		return (byte) (getVIGbase() + getVIGmod());
 	}
-
-	public int getThreat() {
-		return threat;
-	}
-	
-	public void setThreat(int threat) {
-		this.threat = threat;
-	}
-
-	public void addThreat(int threat) {
-		setThreat(getThreat() + threat);
-	}
 	
 	public int takeDamage(int damage) {
 		int damageInflicted=damage-getDEF();
@@ -233,6 +217,4 @@ public abstract class Entity {
 				this.status.remove(i);
 		}
 	}
-
-	public abstract Attack[] getAttacks();
 }

@@ -45,8 +45,7 @@ public class EventController {
 			// TODO: boss fight
 			return "blank";
 		case FIGHT:
-			// TODO: add player's characters
-			session.setAttribute("battle", Battle.generate(game.getSquare().getDistance()));
+			session.setAttribute("battle", Battle.generate(game.getGroup(), game.getSquare().getDistance()));
 			res.sendRedirect("/battle");
 			return "blank";
 		case LOOT:

@@ -82,9 +82,13 @@ public class Battle {
 	}
 	
 	public boolean endTurn() {
-		// foreach enemy, do attack (if possible)
-		// do states
-		// reset player attcked
+		// TODO: foreach enemy, do attack (if possible)
+		// TODO: update states
+
+		for (Played<Character> c : characters)
+			c.setPlayed(false);
+		for (Played<Monster> m : monsters)
+			m.setPlayed(false);
 		return finished();
 	}
 	
@@ -102,7 +106,7 @@ public class Battle {
 	 * @param dist the distance to the 
 	 * @return the group of {@link Monster} (should be &lt;4)
 	 */
-	public static Battle generate (long dist){
+	public static Battle generate (List<Character> group, long dist){
 		List<Monster> monsters = new ArrayList<Monster>();
 		int danger = (int)Math.ceil(dist);
 		double rand = Math.random();
@@ -244,9 +248,7 @@ public class Battle {
 		}
 		
 		Battle battle = new Battle();
-		for (Monster m : monsters) {
-			System.out.println(m.getType().name());
-		}
+		battle.addCharacters(group);
 		if (!battle.addMonsters(monsters))
 			System.err.println("Couldn't add monsters");
 		return battle;

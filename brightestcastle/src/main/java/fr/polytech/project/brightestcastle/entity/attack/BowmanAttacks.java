@@ -2,68 +2,92 @@ package fr.polytech.project.brightestcastle.entity.attack;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.entity.Entity;
 import fr.polytech.project.brightestcastle.entity.StatusEnum;
+import fr.polytech.project.brightestcastle.gameplay.Battle;
 
 public abstract class BowmanAttacks {
-	public static class SHOT extends Attack {
-		public SHOT(Entity sender) {
+	public static class SHOT extends Attack<Character> {
+		public SHOT(Character sender) {
 			super(sender, "SHOT", "Regular ranged attack that deal 100% to a selected rear row");
 		}
 
 		@Override
-		public void attack(Entity[] targets) {
-			int threat = targets[0].takeDamageBlinded(getSender().getATK());
+		public void attack(Battle battle, Entity target) {
+			int threat = target.takeDamageBlinded(getSender().getATK());
 			getSender().addThreat(threat);
+		}
+
+		@Override
+		public boolean[] getTargetables() {
+			return new boolean[] { false, true, true, true };
 		}
 	}
 	
-	public static class STAB extends Attack {
-		public STAB(Entity sender) {
+	public static class STAB extends Attack<Character> {
+		public STAB(Character sender) {
 			super(sender, "STAB", "Melee attack, deals only 50% damages to the front row, but double stamina regeneration for this turn");
 		}
 		
 		@Override
-		public void attack(Entity[] targets) {
-			int threat = targets[0].takeDamageBlinded((int) (getSender().getATK()*0.5));
-			getSender().generateSTA(getSender().getVIG());
-			getSender().addThreat(threat);
+		public void attack(Battle battle, Entity target) {
+			if (battle.getMonsters().size() >= 1) {
+				int threat = battle.getMonsters().get(0).entity().takeDamageBlinded((int) (getSender().getATK()*0.5));
+				getSender().generateSTA(getSender().getVIG());
+				getSender().addThreat(threat);
+			}
+		}
+
+		@Override
+		public boolean[] getTargetables() {
+			return null;
 		}
 	}
 	
-	public static class ARROW extends Attack {
-		public ARROW(Entity sender) {
+	public static class ARROW extends Attack<Character> {
+		public ARROW(Character sender) {
 			super(sender, "MAGIC ARROW", "Send guided arrows at targets at random for 100% send one more arrow every 3 stamina points. Ignore Armor and dodge");
 		}
 		
 		@Override
-		public void attack(Entity[] targets) {
+		public void attack(Battle battle, Entity target) {
 			if (getSender().getSTA() >= 3) {
 				int threat = 0;
 				int nbArrows = (int) Math.floor(getSender().getSTA()/3);
 				for(int i=0; i<nbArrows; i++) {
-					int randomNum = ThreadLocalRandom.current().nextInt(0, 3 + 1);
-					threat += targets[randomNum].takeTrueDamage(getSender().getATK());	
+					int randomNum = ThreadLocalRandom.current().nextInt(0, battle.getMonsters().size());
+					threat += battle.getMonsters().get(randomNum).entity().takeTrueDamage(getSender().getATK());	
 				}
 				getSender().addThreat(threat);
 				getSender().setSTA(getSender().getSTA() - nbArrows*3);
 			} else System.out.println("Not enough Stamina !");
 		}
+
+		@Override
+		public boolean[] getTargetables() {
+			return null;
+		}
 	}
 	
-	public static class PIERCE extends Attack {
-		public PIERCE(Entity sender) {
+	public static class PIERCE extends Attack<Character> {
+		public PIERCE(Character sender) {
 			super(sender, "PIERCE", "Completely pierce through any foe for 200% damage, also reduces it's defense by 25% for 3 turns, cost 5 stamina.");
 		}
 		
 		@Override
-		public void attack(Entity[] targets) {
-			if (getSender().getSTA()>=5) {
-				int threat = targets[0].takeDamageBlinded(getSender().getATK()*2);
-				targets[0].addStatus(StatusEnum.DEFDOWN, 3);
-				getSender().setSTA(getSender().getSTA()-5);
+		public void attack(Battle battle, Entity target) {
+			if (getSender().getSTA() >= 5) {
+				int threat = target.takeDamageBlinded(getSender().getATK() * 2);
+				target.addStatus(StatusEnum.DEFDOWN, 3);
+				getSender().setSTA(getSender().getSTA() - 5);
 				getSender().addThreat(threat);
 			} else System.out.println("Not enough Stamina!");
+		}
+
+		@Override
+		public boolean[] getTargetables() {
+			return new boolean[] { true, true, true, true };
 		}
 	}
 }
