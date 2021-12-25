@@ -161,7 +161,7 @@ public abstract class Entity {
 	}
 	
 	public int takeDamageBlinded(int damage) {
-		if (Math.random()*100 <= 50) {
+		if (Math.random()*100 <= 50 && isAffected(StatusEnum.POISONNED)) {
 			System.out.println("You Missed your attack!");
 			
 			return 0;

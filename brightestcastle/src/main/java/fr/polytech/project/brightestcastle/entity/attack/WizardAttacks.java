@@ -3,6 +3,7 @@ package fr.polytech.project.brightestcastle.entity.attack;
 import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.entity.Entity;
 import fr.polytech.project.brightestcastle.entity.Monster;
+import fr.polytech.project.brightestcastle.entity.StatusEnum;
 import fr.polytech.project.brightestcastle.gameplay.Battle;
 import fr.polytech.project.brightestcastle.gameplay.Played;
 
@@ -45,6 +46,7 @@ public abstract class WizardAttacks {
 
 		public void attack(Battle battle, Entity target) {
 			target.takeDamage((int) 2.5 * getSender().getATK());
+			target.addStatus(StatusEnum.POISONNED, 2);
 		}
 
 		@Override

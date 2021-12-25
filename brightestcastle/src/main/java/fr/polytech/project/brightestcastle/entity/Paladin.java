@@ -21,7 +21,7 @@ public class Paladin extends Character {
 
 	@Override
 	public CharacterJob getJob() {
-		return CharacterJob.BOWMAN;
+		return CharacterJob.PALADIN;
 	}
 
 	public List<Attack<Character>> getAttacks() {

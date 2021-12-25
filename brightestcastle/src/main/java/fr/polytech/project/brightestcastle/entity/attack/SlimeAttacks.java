@@ -2,6 +2,7 @@ package fr.polytech.project.brightestcastle.entity.attack;
 
 import fr.polytech.project.brightestcastle.entity.Entity;
 import fr.polytech.project.brightestcastle.entity.Monster;
+import fr.polytech.project.brightestcastle.entity.StatusEnum;
 import fr.polytech.project.brightestcastle.gameplay.Battle;
 
 public abstract class SlimeAttacks {
@@ -27,10 +28,14 @@ public abstract class SlimeAttacks {
 		}
 		
 		public void attack(Battle battle, Entity target) {
-			if (battle.getMonsters().size() >= 2)
+			if (battle.getMonsters().size() >= 2) {
 				battle.getMonsters().get(1).entity().takeDamage((int) getSender().getATK());
-			if (battle.getMonsters().size() >= 1)
+				if(Math.random()*100<=25) battle.getMonsters().get(1).entity().addStatus(StatusEnum.STUNNED);
+			}
+			if (battle.getMonsters().size() >= 1) {
 				battle.getMonsters().get(0).entity().takeDamage((int) getSender().getATK());
+				if(Math.random()*100<=25) battle.getMonsters().get(1).entity().addStatus(StatusEnum.STUNNED);
+			}
 		}
 
 		@Override

@@ -30,6 +30,7 @@ public abstract class EdgyKnightAttacks {
 
 		public void attack(Battle battle, Entity target) {
 			target.takeDamageBlinded(getSender().getATK());
+			target.addStatus(StatusEnum.POISONNED, 2);
 		}
 
 		@Override
@@ -64,6 +65,7 @@ public abstract class EdgyKnightAttacks {
 		public void attack(Battle battle, Entity target) {
 			if (battle.getCharacters().size() >= 1)
 				battle.getCharacters().get(0).entity().takeDamage(3 * getSender().getATK());
+				target.addStatus(StatusEnum.POISONNED, 2);
 		}
 
 		@Override
