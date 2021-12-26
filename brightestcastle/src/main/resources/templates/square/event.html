@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Brightest Castle - Red Coverall</title>
+</head>
+<body>
+	<h1>Event</h1>
+	
+	<p th:each="line : ${event}" th:text="${line}"></p>
+	
+	<div><a href="/map"><button>Continue</button></a></div>
+</body>
+</html>

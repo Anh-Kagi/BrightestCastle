@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Map</title>
+	<style>
+	.cell {
+		display: flex;
+		flex-flow: row wrap;
+		align-items: center;
+		justify-content: center;
+	}
+	.cell > * {
+		height: 2em;
+		width: 2em;
+	}
+	.cell-room {
+		border: 0.25em solid black;
+		
+		background-color: black;
+	}
+	.cell-start {
+		border-style: dashed;
+	}
+	.cell-end {
+		border-style: dotted;
+	}
+	.cell-visited {
+		background-color: transparent;
+	}
+	td {
+		width: 3em;
+		height: 3em;
+	}
+	form button {
+		height: 100%;
+		width: 100%;
+	}
+	</style>
+</head>
+
+<body>
+	<table>
+		<tbody>
+			<tr th:each="row : ${#numbers.sequence(0, map.getHeight()-1)}">
+				<td th:each="col : ${#numbers.sequence(0, map.getWidth()-1)}" th:classappend="${(map.getVisible(col, row) ? ('cell-room' + (map.getSquare(col, row).getVisited() ? ' cell-visited' : '') + (map.getStart().x() == col && map.getStart().y() == row ? ' cell-start' : '') + (map.getEnd().x() == col && map.getEnd().y()  == row ? ' cell-end' : '')) : 'cell-empty')}">
+					<div th:class="cell">
+						<img th:if="${game.getPos().x() == col && game.getPos().y() == row}" src="/img/player.svg"/>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	<div th:text="${game.getSquare().getType().name()}"></div>
+	<div th:text="${game.getSquare().getDistance()}"></div>
+	<div th:text="${map.getBossProximity(game.getPos())}"></div>
+	<form action="/map" method="post">
+		<table>
+			<tr>
+				<td></td>
+				<td>
+					<button type="submit" name="direction" value="UP">
+						<img src="/img/chevron/up.svg"/>
+					</button>
+				</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<button type="submit" name="direction" value="LEFT">
+						<img src="/img/chevron/left.svg"/>
+					</button>
+				</td>
+				<td>
+					<button type="submit" name="direction" value="DOWN">
+						<img src="/img/chevron/down.svg"/>
+					</button>
+				</td>
+				<td>
+					<button type="submit" name="direction" value="RIGHT">
+						<img src="/img/chevron/right.svg"/>
+					</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	<a href="/gameover"><button>Embrace cowardice?</button></a>
+</body>
+
+</html>
