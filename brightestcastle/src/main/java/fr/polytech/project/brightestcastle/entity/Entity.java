@@ -1,5 +1,6 @@
 package fr.polytech.project.brightestcastle.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Entity {
@@ -15,13 +16,14 @@ public abstract class Entity {
 	private int DEF;
 	private int STA; // same for everyone, regen each turn
 
-	private List <Status> status;
+	private List<Status> status = new ArrayList<Status>();
 	
 	public Entity(String name, byte STR, byte CON, byte VIG) {
 		setName(name);
 
-		setHP(25 + CON*5);
-		setHPmax(getHP());
+		int HP = 25 + CON*5;
+		setHPmax(HP);
+		setHP(HP);
 		setSTA(20);
 		setATKbase(STR + 3);
 		
@@ -98,9 +100,20 @@ public abstract class Entity {
 		return DEF;
 	}
 	
+	public int getDEFmod() {
+		byte mod = 0;
+		
+		if (isAffected(StatusEnum.DEFUP))
+			mod += 3;
+		
+		if (getVIGbase() >= 3+1 && isAffected(StatusEnum.DEFDOWN))
+			mod -= 3;
+		
+		return mod;
+	}
+	
 	public int getDEF() {
-		// TODO: return DEF + modifiers (by overriding or with status)
-		return getDEFbase();
+		return getDEFbase() + getDEFmod();
 	}
 	
 	public void setSTRbase(byte STR) {
@@ -112,7 +125,6 @@ public abstract class Entity {
 	}
 	
 	public byte getSTR() {
-		// TODO: return STR + modifiers (by overriding or with status)
 		return getSTRbase();
 	}
 	
@@ -155,25 +167,22 @@ public abstract class Entity {
 	
 	public int takeDamage(int damage) {
 		int damageInflicted=damage-getDEF();
-		setHP(getHP()-damageInflicted);
-		
-		return damageInflicted;
+		return takeTrueDamage(damageInflicted);
 	}
 	
 	public int takeDamageBlinded(int damage) {
-		if (Math.random()*100 <= 50 && isAffected(StatusEnum.POISONNED)) {
-			System.out.println("You Missed your attack!");
-			
-			return 0;
-		} else {
-			int damageInflicted = damage - getDEF();
-			setHP(getHP() - damageInflicted);
-			
-			return damageInflicted;
-		}
+		if (isAffected(StatusEnum.BLINDED)) {
+			if (Math.random() < 0.5) {
+				System.out.println("You Missed your attack!");
+				return 0;
+			} else
+				return takeDamage(damage);
+		} else
+			return takeDamage(damage);
 	}
 	
 	public int takeTrueDamage(int damage) {
+		damage = Math.max(0, damage);
 		setHP(getHP() - damage);
 		return damage;
 	}

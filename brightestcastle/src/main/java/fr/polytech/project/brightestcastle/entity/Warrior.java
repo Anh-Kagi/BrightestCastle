@@ -15,9 +15,7 @@ public class Warrior extends Character {
 
 	@Override
 	public int getATK() {
-		int ATK;
-		ATK = ((getHPmax() - getHP()) / getHPmax()) * super.getATK() + super.getATK();
-		return ATK;
+		return ((getHPmax() - getHP()) / getHPmax()) * super.getATK() + super.getATK();
 	}
 
 	@Override

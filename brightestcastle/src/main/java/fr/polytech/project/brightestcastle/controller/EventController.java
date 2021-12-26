@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.gameplay.Battle;
 import fr.polytech.project.brightestcastle.gameplay.Game;
 
@@ -54,7 +55,6 @@ public class EventController {
 			return "square/loot";
 		case CAMP:
 			// TODO: heal characters
-			game.getSquare().setVisited(true);
 			return "square/camp";
 		default:
 			// should not happen

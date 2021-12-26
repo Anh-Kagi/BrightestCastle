@@ -78,7 +78,7 @@ public abstract class WarriorAttacks {
 			if(getSender().getSTA() == 20) {
 				if (battle.getMonsters().size() >= 1) {
 					Monster opponent = battle.getMonsters().get(0).entity();
-					int threat = opponent.takeDamageBlinded(getSender().getATK()*5);
+					int threat = opponent.takeDamage(getSender().getATK()*5);
 					getSender().setSTA(0);
 					getSender().addThreat(threat);
 					opponent.addStatus(StatusEnum.STUNNED, 1);

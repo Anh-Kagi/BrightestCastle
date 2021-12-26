@@ -1,44 +1,152 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>Brightest Castle - Red Coverall</title>
-	<style>
-	.group {
-		display: flex;
-		flex-flow: row nowrap;
-	}
-	.group > * {
-		padding: 1em;
-		border: 1px solid black;
-	}
-	</style>
+<meta charset="UTF-8">
+<title>Brightest Castle - Red Coverall</title>
+<style>
+body {
+	display: flex;
+	flex-flow: column nowrap;
+	width: 100%;
+	justify-content: center;
+}
+
+.group {
+	display: flex;
+	flex-flow: row nowrap;
+}
+
+.group>* {
+	padding: 1em;
+	border: 1px solid black;
+}
+
+.hud {
+	display: flex;
+	flex-flow: row nowrap;
+}
+</style>
 </head>
 <body>
 	<h1>Battle</h1>
-	
-	<!-- TODO: display battlemap (characters & enemies) -->
+
 	<div class="group">
 		<div th:each="chara : ${battle.getCharacters()}">
 			<div th:text="${chara.entity().getJob().name()}"></div>
-			<div>played: <span th:text="${chara.getPlayed()}"></span></div>
+			<div>
+				played: <span th:text="${chara.getPlayed()}"></span><br/>
+				HP: <span th:text="${chara.entity().getHP()}"></span>/<span th:text="${chara.entity().getHPmax()}"></span><br/>
+				<hr/>
+				CON: <span th:text="${chara.entity().getCONbase()}"></span><br/>
+				STR: <span th:text="${chara.entity().getSTRbase()}"></span><br/>
+				VIG: <span th:text="${chara.entity().getVIGbase()}"></span> + <span th:text="${chara.entity().getVIGmod()}"></span><br/>
+				<hr/>
+				ATK: <span th:text="${chara.entity().getATKbase()}"></span> + <span th:text="${chara.entity().getATKmod()}"></span><br/>
+				DEF: <span th:text="${chara.entity().getDEFbase()}"></span> + <span th:text="${chara.entity().getDEFmod()}"></span><br/>
+				STA: <span th:text="${chara.entity().getSTA()}"></span><br/>
+			</div>
 		</div>
-		
-		<div>
-			VS
-		</div>
-		
+
+		<div>VS</div>
+
 		<div th:each="monster : ${battle.getMonsters()}">
 			<div th:text="${monster.entity().getType().name()}"></div>
-			
-			<div>played: <span th:text="${monster.getPlayed()}"></span></div>
-		</div> 
+			<div>
+				played: <span th:text="${monster.getPlayed()}"></span><br/>
+				HP: <span th:text="${monster.entity().getHP()}"></span>/<span th:text="${monster.entity().getHPmax()}"></span><br/>
+				<hr/>
+				CON: <span th:text="${monster.entity().getCONbase()}"></span><br/>
+				STR: <span th:text="${monster.entity().getSTRbase()}"></span><br/>
+				VIG: <span th:text="${monster.entity().getVIGbase()}"></span> + <span th:text="${monster.entity().getVIGmod()}"></span><br/>
+				<hr/>
+				ATK: <span th:text="${monster.entity().getATKbase()}"></span> + <span th:text="${monster.entity().getATKmod()}"></span><br/>
+				DEF: <span th:text="${monster.entity().getDEFbase()}"></span> + <span th:text="${monster.entity().getDEFmod()}"></span><br/>
+				STA: <span th:text="${monster.entity().getSTA()}"></span><br/>
+			</div>
+		</div>
 	</div>
+
+	<!-- sender selector -->
+	<div>
+		<form name="sender_form" action="/battle" method="get">
+			<select name="sender">
+				<option value="">--</option>
+				<option
+					th:each="i : ${#numbers.sequence(0, battle.getCharacters().size()-1)}"
+					th:value="${i}"
+					th:text="${battle.getCharacters().get(i).entity().getJob().name()}"
+					th:disabled="${battle.getCharacters().get(i).getPlayed()}"
+					th:selected="${sender != null && sender == i}"></option>
+			</select>
+		</form>
+
+		<script>
+		document.sender_form.sender.addEventListener("change", () => {
+			document.sender_form.submit();
+		});
+		</script>
+	</div>
+
+	<div class="hud">
+		<!-- attack selector -->
+		<div th:if="${sender != null}">
+			<form name="attack_form" action="/battle" method="get">
+				<input type="hidden" name="sender" th:value="${sender}" /> <select
+					name="attack">
+					<option value="">--</option>
+					<option
+						th:each="i : ${#numbers.sequence(0, battle.getCharacters().get(sender).entity().getAttacks().size()-1)}"
+						th:value="${i}"
+						th:text="${battle.getCharacters().get(sender).entity().getAttacks().get(i).getName()}"
+						th:selected="${attack != null && attack == i}"></option>
+				</select>
+			</form>
+			<script>
+			document.attack_form.attack.addEventListener("change", () => {
+				document.attack_form.submit();
+			});
+			</script>
+		</div>
 	
+		<!-- target selector -->
+		<div
+			th:if="${sender != null && attack != null && battle.getCharacters().get(sender).entity().getAttacks().get(attack).needTarget()}">
+			<form name="target_form" action="/battle" method="get">
+				<input type="hidden" name="sender" th:value="${sender}" /> <input
+					type="hidden" name="attack" th:value="${attack}" /> <select
+					name="target">
+					<option value="">--</option>
+					<option
+						th:each="i : ${#numbers.sequence(0, battle.getMonsters().size()-1)}"
+						th:value="${i}"
+						th:text="${battle.getMonsters().get(i).entity().getType().name()}"
+						th:disabled="${battle.getCharacters().get(sender).entity().getAttacks().get(attack).getTargetables()[i]}"
+						th:selected="${target != null && target == i}"></option>
+				</select>
+			</form>
+			<script>
+			document.target_form.target.addEventListener("change", () => {
+				document.target_form.submit();
+			});
+			</script>
+		</div>
+	
+		<!-- launch attack -->
+		<div
+			th:if="${sender != null && attack != null && (!battle.getCharacters.get(sender).entity().getAttacks().get(attack).needTarget() || target != null)}">
+			<form action="/battle" method="post">
+				<input type="hidden" name="sender" th:value="${sender}" /> <input
+					type="hidden" name="attack" th:value="${attack}" /> <input
+					type="hidden" name="target" th:value="${target}" /> <input
+					type="submit" value="attack" />
+			</form>
+		</div>
+	</div>
+
 	<div>
 		<form action="/battle" method="post">
-			<input type="hidden" name="endturn"/>
-			<input type="submit" value="end turn?"/>
+			<input type="hidden" name="endturn" /> <input type="submit"
+				value="end turn?" />
 		</form>
 	</div>
 </body>

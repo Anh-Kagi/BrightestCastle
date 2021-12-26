@@ -26,8 +26,8 @@ public abstract class Attack<T extends Entity> {
 		return sender;
 	}
 	
-	public boolean needTargets() {
-		return getTargetables() == null;
+	public boolean needTarget() {
+		return getTargetables() != null;
 	}
 	
 	public abstract boolean[] getTargetables(); 

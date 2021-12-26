@@ -30,11 +30,11 @@ public abstract class SlimeAttacks {
 		public void attack(Battle battle, Entity target) {
 			if (battle.getMonsters().size() >= 2) {
 				battle.getMonsters().get(1).entity().takeDamage((int) getSender().getATK());
-				if(Math.random()*100<=25) battle.getMonsters().get(1).entity().addStatus(StatusEnum.STUNNED);
+				if(Math.random()*100<=25) battle.getMonsters().get(1).entity().addStatus(StatusEnum.STUNNED, 1);
 			}
 			if (battle.getMonsters().size() >= 1) {
 				battle.getMonsters().get(0).entity().takeDamage((int) getSender().getATK());
-				if(Math.random()*100<=25) battle.getMonsters().get(1).entity().addStatus(StatusEnum.STUNNED);
+				if(Math.random()*100<=25) battle.getMonsters().get(1).entity().addStatus(StatusEnum.STUNNED, 1);
 			}
 		}
 

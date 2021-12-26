@@ -1,41 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<title>Brightest Castle - Red Coverall</title>
+<meta charset="UTF-8">
+<title>Brightest Castle - Red Coverall</title>
 </head>
 <body>
 	<h1>Brightest Castle</h1>
-	
+
 	<div th:if="${invalid}">
-	  <p><strong>Please verify your character sheets, some values are invalid</strong></p>
+		<p>
+			<strong>Please verify your character sheets, some values are
+				invalid</strong>
+		</p>
 	</div>
-	
-	<form id="form_chara" th:action="@{/}" th:object="${form}" method="post">
-		<label>Name:</label>
-		<input type="text" th:field="*{name}" placeholder="character name"/>
-		<br/>
-		
-		<label>Job:</label>
-		<select th:field="*{job}">
-			<option value=""> -- </option>
-			<option th:each="job : ${T(fr.polytech.project.brightestcastle.entity.CharacterJob).values()}" th:value="${job}" th:text="${job}"></option>
-		</select>
-		<br/>
-		
-		<label>CON:</label>
-		<input type="range" th:field="*{CON}" min="0" max="5" step="1"/>
-		<br/>
-		
-		<label>STR:</label>
-		<input type="range" th:field="*{STR}" min="0" max="5" step="1"/>
-		<br/>
-		
-		<label>VIG:</label>
-		<input type="range" th:field="*{VIG}" min="0" max="5" step="1"/>
-		<br/>
-		
-		<input type="submit" value="Create"/>
+
+	<form id="form_chara" th:action="@{/}" th:object="${form}"
+		method="post">
+		<label>Name:</label> <input type="text" th:field="*{name}"
+			placeholder="character name" /> <br /> <label>Job:</label> <select
+			th:field="*{job}">
+			<option value="">--</option>
+			<option
+				th:each="job : ${T(fr.polytech.project.brightestcastle.entity.CharacterJob).values()}"
+				th:value="${job}" th:text="${job}"></option>
+		</select> <br /> <label>CON:</label> <input type="range" th:field="*{CON}"
+			min="0" max="5" step="1" /> <br /> <label>STR:</label> <input
+			type="range" th:field="*{STR}" min="0" max="5" step="1" /> <br /> <label>VIG:</label>
+		<input type="range" th:field="*{VIG}" min="0" max="5" step="1" /> <br />
+
+		<input type="submit" value="Create" />
 	</form>
 </body>
 </html>

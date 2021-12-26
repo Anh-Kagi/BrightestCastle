@@ -9,6 +9,7 @@ import fr.polytech.project.brightestcastle.entity.EdgyKnight;
 import fr.polytech.project.brightestcastle.entity.Monster;
 import fr.polytech.project.brightestcastle.entity.Slime;
 import fr.polytech.project.brightestcastle.entity.Wizard;
+import fr.polytech.project.brightestcastle.entity.attack.Attack;
 
 public class Battle {
 	/**
@@ -17,7 +18,7 @@ public class Battle {
 	public static final byte MAX_TEAM_MEMBERS = 4;
 	
 	private List<Played<Character>> characters = new ArrayList<Played<Character>>();
-	private List<Played<Monster>> monsters = new ArrayList<Played<Monster>>();
+	private List<Played<Monster>> monsters = new ArrayList<Played<Monster>>(); // TODO removed Played for monsters
 	
 	/**
 	 * Adds a list of {@link Character}s to the {@code characters} list.<br>
@@ -73,12 +74,24 @@ public class Battle {
 	}
 	
 	public boolean attack(int sender, int target, int attack) {
-		// check that the sender exists
-		// check that the target exists
-		// check that the attack exists
-		// check if player can attack
-		// attack
-		return true; // if could attack
+		System.out.println("Attack: " + sender + " " + target + " " + attack);
+		if (sender >= 0 && sender < this.characters.size()) { // check that the sender exists
+			Played<Character> c = getCharacters().get(sender);
+			if (!c.getPlayed()) { // if player didn't played already this turn
+				if (attack >= 0 && attack < c.entity().getAttacks().size()) { // check that the attack exists
+					Attack<Character> a = c.entity().getAttacks().get(attack);
+					Monster m = (a.needTarget() && target >= 0 && target < getMonsters().size()) ? getMonsters().get(target).entity() : null; // check that the target exists or isn't needed
+					
+					a.attack(this, m);
+					c.setPlayed(true);
+					return true;
+				} else
+					System.out.println("invalid attack"); // TODO: tmp
+			} else
+				System.out.println("player already played"); // TODO: tmp
+		} else
+			System.out.println("invalid sender"); // TODO: tmp
+		return false;
 	}
 	
 	public boolean endTurn() {
@@ -103,7 +116,7 @@ public class Battle {
 	/**
 	 * Generates a group of {@link Monster} for a Battle.
 	 * 
-	 * @param dist the distance to the 
+	 * @param dist the distance to the boss's {@link Square}
 	 * @return the group of {@link Monster} (should be &lt;4)
 	 */
 	public static Battle generate (List<Character> group, long dist){
@@ -113,6 +126,7 @@ public class Battle {
 		switch (danger) {
 			case 10:
 				monsters.add(new Wizard());
+				break;
 			case 9:
 				if (rand<0.2) {
 					monsters.add(new EdgyKnight());
@@ -128,7 +142,8 @@ public class Battle {
 					monsters.add(new EdgyKnight());
 					monsters.add(new EdgyKnight());
 					monsters.add(new Slime());
-				}	
+				}
+				break;
 			case 8:
 				if (rand<0.4) {
 					monsters.add(new EdgyKnight());
@@ -145,7 +160,8 @@ public class Battle {
 					monsters.add(new Slime());
 					monsters.add(new EdgyKnight());
 					monsters.add(new EdgyKnight());
-				}	
+				}
+				break;
 			case 7:
 				if (rand<0.4) {
 					monsters.add(new EdgyKnight());
@@ -159,7 +175,8 @@ public class Battle {
 					monsters.add(new Bat());
 					monsters.add(new Bat());
 					monsters.add(new EdgyKnight());
-				}				
+				}
+				break;		
 			case 6:
 				if (rand<0.4) {
 					monsters.add(new EdgyKnight());
@@ -174,6 +191,7 @@ public class Battle {
 					monsters.add(new Bat());
 					monsters.add(new Bat());
 				}
+				break;
 			case 5:
 				if (rand<0.4) {
 					monsters.add(new EdgyKnight());
@@ -187,6 +205,7 @@ public class Battle {
 					monsters.add(new Bat());
 					monsters.add(new Bat());
 				}
+				break;
 			case 4:
 				if (rand<0.2) {
 					monsters.add(new Slime());
@@ -204,6 +223,7 @@ public class Battle {
 					monsters.add(new Slime());
 					monsters.add(new Bat());
 				}
+				break;
 			case 3:
 				if (rand<0.4) {
 					monsters.add(new Bat());
@@ -219,6 +239,7 @@ public class Battle {
 					monsters.add(new Slime());
 					monsters.add(new Slime());
 				}
+				break;
 			case 2:
 				if (rand<0.2) {
 					monsters.add(new Bat());
@@ -232,6 +253,7 @@ public class Battle {
 					monsters.add(new Slime());
 					monsters.add(new Bat());
 				}
+				break;
 			case 1:
 				if (rand<0.4) {
 					monsters.add(new Slime());
@@ -243,6 +265,7 @@ public class Battle {
 					monsters.add(new Slime());
 					monsters.add(new Bat());
 				}
+				break;
 			default:
 				monsters.add(new Slime());
 		}
