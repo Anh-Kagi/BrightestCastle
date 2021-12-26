@@ -8,7 +8,7 @@ import fr.polytech.project.brightestcastle.entity.attack.BatAttacks;
 
 public class Bat extends Monster {
 	public Bat() {
-		super("Bat", (byte) 3, (byte) 1);
+		super((byte) 3, (byte) 1);
 	}
 
 	@Override
@@ -29,5 +29,10 @@ public class Bat extends Monster {
 	@Override
 	public List<Attack<Monster>> getAttacks() {
 		return Arrays.asList(new BatAttacks.BITE(this), new BatAttacks.BLAST(this));
+	}
+
+	@Override
+	public Attack<Monster> selectAttack(int turn) {
+		return turn % 3 == 0 ? getAttacks().get(1) : getAttacks().get(0); // every 3 turns, BLAST, BITE otherwise
 	}
 }

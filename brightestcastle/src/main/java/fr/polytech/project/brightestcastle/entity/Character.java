@@ -5,11 +5,21 @@ import java.util.List;
 import fr.polytech.project.brightestcastle.entity.attack.Attack;
 
 public abstract class Character extends Entity {
+	private String name;
 	private int threat;
 	
 	public Character(String name, byte STR, byte CON, byte VIG) {
-		super(name, STR, CON, VIG);
+		super(STR, CON, VIG);
+		setName(name);
 		setThreat(0);
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	public String getName() {
+		return name;
 	}
 	
 	public abstract CharacterJob getJob();

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Entity {
-	private String name;
-
 	private byte CON; // give more HP
 	private byte STR; // give more ATK
 	private byte VIG; // give more STA regen each turn
@@ -18,9 +16,7 @@ public abstract class Entity {
 
 	private List<Status> status = new ArrayList<Status>();
 	
-	public Entity(String name, byte STR, byte CON, byte VIG) {
-		setName(name);
-
+	public Entity(byte STR, byte CON, byte VIG) {
 		int HP = 25 + CON*5;
 		setHPmax(HP);
 		setHP(HP);
@@ -30,14 +26,6 @@ public abstract class Entity {
 		setSTRbase(STR);
 		setCONbase(CON);
 		setVIGbase(VIG);
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	public String getName() {
-		return name;
 	}
 	
 	public void setHPmax(int HPmax) {
