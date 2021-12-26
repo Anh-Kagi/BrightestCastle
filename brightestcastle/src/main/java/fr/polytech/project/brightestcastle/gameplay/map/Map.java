@@ -17,6 +17,7 @@ public class Map {
 	private Square grid[][];
 	private Coords start;
 	private Coords end;
+	private int maxdist;
 	
 	protected Map(int w, int h) {
 		grid = new Square[h][w];
@@ -214,6 +215,16 @@ public class Map {
 			}
 			distance++;
 		}
+		maxdist = distance-1;
+	}
+	
+	/**
+	 * Returns the proximity of the current {@link Square} to the {@link Map}'s end.
+	 * With 1.0 being the end {@link Square}, and 0 being the most foreign {@link Square}.
+	 * @return the proximity to the Boss's {@link Square}
+	 */
+	public float getBossProximity(Coords c) {
+		return ((float) (maxdist - getSquare(c).getDistance())) / (float) maxdist;
 	}
 	
 	/**

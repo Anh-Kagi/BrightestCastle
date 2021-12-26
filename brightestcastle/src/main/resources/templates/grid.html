@@ -52,9 +52,9 @@
 			</tr>
 		</tbody>
 	</table>
-	<div th:text="${map.getSquare(game.getPos()).getType().name()}"></div>
-	<div th:text="${map.getSquare(game.getPos()).getDistance()}"></div>
-	<div th:text="${map.getSquare(game.getPos()).getBossProximity()}"></div>
+	<div th:text="${game.getSquare().getType().name()}"></div>
+	<div th:text="${game.getSquare().getDistance()}"></div>
+	<div th:text="${map.getBossProximity(game.getPos())}"></div>
 	<form action="/map" method="post">
 		<table>
 			<tr>

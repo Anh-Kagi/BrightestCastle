@@ -69,13 +69,4 @@ public class Square {
 	public int getDistance() {
 		return distance;
 	}
-	
-	/**
-	 * Returns the proximity of the current {@link Square} to the {@link Map}'s end.
-	 * With 1.0 being the end {@link Square}, and 0 being the infinity.
-	 * @return the proximity to the Boss's {@link Square}
-	 */
-	public float getBossProximity() {
-		return distance == -1 ? -1.f : 1.f/((float)distance+1.f);
-	}
 }

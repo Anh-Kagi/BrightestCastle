@@ -42,7 +42,7 @@ public class EventController {
 			return "blank";
 		case BOSS:
 		case FIGHT:
-			session.setAttribute("battle", Battle.generate(game.getGroup(), game.getSquare().getBossProximity()));
+			session.setAttribute("battle", Battle.generate(game.getGroup(), game.getMap().getBossProximity(game.getPos())));
 			res.sendRedirect("/battle");
 			return "blank";
 		case LOOT:
