@@ -7,6 +7,6 @@ public enum SquareType {
 	EMPTY,
 	FIGHT,
 	BOSS,
-	LOOT,
+	EVENT,
 	CAMP;
 }

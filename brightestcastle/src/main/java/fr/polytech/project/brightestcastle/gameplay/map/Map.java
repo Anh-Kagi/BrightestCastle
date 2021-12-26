@@ -320,7 +320,7 @@ public class Map {
 			for (int i=ants.size()-1; i>=0; i--) {
 				MazeAnt a = ants.get(i);
 				if (a.move(finished))
-					if (map.generateSquare(a, a.isDead() ? SquareType.CAMP : (rand.nextFloat() < 0.25 ? SquareType.LOOT : SquareType.FIGHT)))
+					if (map.generateSquare(a, a.isDead() ? SquareType.CAMP : (rand.nextFloat() < 0.25 ? SquareType.EVENT : SquareType.FIGHT)))
 						ants.remove(a);
 				if (a.x() == map.getWidth()-1) {
 					finished = true;
@@ -373,7 +373,7 @@ public class Map {
 				if (getSquare(x, y) != null)
 					switch(getSquare(x, y).getType()) {
 					case EMPTY:
-						s += "E";
+						s += "O";
 						break;
 					case FIGHT:
 						s += "F";
@@ -384,8 +384,8 @@ public class Map {
 					case CAMP:
 						s += "C";
 						break;
-					case LOOT:
-						s += "L";
+					case EVENT:
+						s += "E";
 						break;	
 					}
 				else

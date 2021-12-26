@@ -5,10 +5,10 @@
 	<title>Brightest Castle - Red Coverall</title>
 </head>
 <body>
-	<h1>Loot</h1>
+	<h1>Event</h1>
 	
-	<p>You've found some loot!</p>
-	<!-- TODO: display loot -->
+	<p th:each="line : ${event}" th:text="${line}"></p>
+	
 	<div><a href="/map"><button>Continue</button></a></div>
 </body>
 </html>

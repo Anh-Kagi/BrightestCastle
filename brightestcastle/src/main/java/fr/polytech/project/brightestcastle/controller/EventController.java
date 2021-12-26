@@ -6,16 +6,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.gameplay.Battle;
+import fr.polytech.project.brightestcastle.gameplay.Event;
 import fr.polytech.project.brightestcastle.gameplay.Game;
 
 @Controller
 public class EventController {
 	@GetMapping(path="/event")
-	public String event(HttpSession session, HttpServletResponse res) throws IOException {
+	public String event(HttpSession session, HttpServletResponse res, Model model) throws IOException {
 		// if player didn't start a game
 		Game game = (Game) session.getAttribute("game");
 		if (game == null) {
@@ -45,10 +47,10 @@ public class EventController {
 			session.setAttribute("battle", Battle.generate(game.getGroup(), game.getMap().getBossProximity(game.getPos())));
 			res.sendRedirect("/battle");
 			return "blank";
-		case LOOT:
-			// TODO: give loot
+		case EVENT:
 			game.getSquare().setVisited(true);
-			return "square/loot";
+			model.addAttribute("event", Event.applyEvent(game.getGroup()));
+			return "square/event";
 		case CAMP:
 			game.getSquare().setVisited(true);
 			for (Character c : game.getGroup())
