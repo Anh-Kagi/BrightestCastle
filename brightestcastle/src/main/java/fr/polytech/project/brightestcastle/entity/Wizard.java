@@ -8,7 +8,7 @@ import fr.polytech.project.brightestcastle.entity.attack.WizardAttacks;
 
 public class Wizard extends Monster {
 	public Wizard() {
-		super("Wizard", (byte) 7, (byte) 5);
+		super((byte) 7, (byte) 5);
 	}
 
 	@Override
@@ -20,5 +20,11 @@ public class Wizard extends Monster {
 	public List<Attack<Monster>> getAttacks() {
 		return Arrays.asList(new WizardAttacks.ZAP(this), new WizardAttacks.HEAL(this),
 				new WizardAttacks.FIREBALL(this), new WizardAttacks.SMACK(this));
+	}
+
+	@Override
+	public Attack<Monster> selectAttack(int turn) {
+		// SMACK every 6 turns, else FIREBALL every 3, ZAP otherwise, HEAL not used
+		return turn % 6 == 0 ? getAttacks().get(3) : (turn % 4 == 0 ? getAttacks().get(2) : getAttacks().get(0));
 	}
 }

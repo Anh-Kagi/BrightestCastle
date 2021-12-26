@@ -19,8 +19,14 @@ public class Battle {
 	 */
 	public static final byte MAX_TEAM_MEMBERS = 4;
 	
+	private int turn = 0;
+	
 	private List<Played<Character>> characters = new ArrayList<Played<Character>>();
 	private List<Played<Monster>> monsters = new ArrayList<Played<Monster>>(); // TODO removed Played for monsters
+	
+	public int getTurn() {
+		return turn;
+	}
 	
 	/**
 	 * Adds a list of {@link Character}s to the {@code characters} list.<br>
@@ -78,7 +84,6 @@ public class Battle {
 	}
 	
 	public boolean attack(int sender, int target, int attack) {
-		System.out.println("Attack: " + sender + " " + target + " " + attack);
 		if (sender >= 0 && sender < this.characters.size()) { // check that the sender exists
 			Played<Character> c = getCharacters().get(sender);
 			if (!c.getPlayed() && !c.entity().isAffected(StatusEnum.STUNNED)) { // if player didn't played already this turn nor is stunned
@@ -86,6 +91,7 @@ public class Battle {
 					Attack<Character> a = c.entity().getAttacks().get(attack);
 					Monster m = (a.needTarget() && target >= 0 && target < getMonsters().size()) ? getMonsters().get(target).entity() : null; // check that the target exists or isn't needed
 					
+					System.out.println(c.entity().getName() + " launched " + a.getName() + (m != null ? " on " + m.getType().name() : "")); // TODO: tmp debug
 					a.attack(this, m);
 					c.setPlayed(true);
 					return true;
@@ -98,14 +104,49 @@ public class Battle {
 		return false;
 	}
 	
+	private void mobAttack(Monster monster) {
+		Attack<Monster> attack = monster.selectAttack(turn);
+		if (attack.needTarget()) {
+			Character target = null;
+			
+			for (int i=0; i<characters.size(); i++) {
+				if (attack.getTargetables()[i]) {
+					Character chara = characters.get(i).entity();
+					if (target == null)
+						target = chara;
+					else if (chara.getThreat() > target.getThreat())
+						target = chara;
+				}
+			}
+			
+			if (target != null) {
+				attack.attack(this, target);
+			}
+		} else
+			attack.attack(this, null);
+
+		System.out.println(monster.getType().name() + " launched " + attack.getName());
+	}
+	
 	public boolean endTurn() {
-		// TODO: foreach enemy, do attack (if possible)
+		for (Played<Monster> m : monsters)
+			mobAttack(m.entity());
 
 		// update states
 		for (Played<Character> c : characters)
 			c.entity().statusUpdate();
 		for (Played<Monster> m : monsters)
 			m.entity().statusUpdate();
+		
+		// remove dead characters
+		for (int i = characters.size() - 1; i >= 0; i--)
+			if (characters.get(i).entity().getHP() <= 0)
+				characters.remove(i);
+		
+		// remove dead monsters
+		for (int i = monsters.size() - 1; i >= 0; i--)
+			if (monsters.get(i).entity().getHP() <= 0)
+				monsters.remove(i);
 		
 		// reset played flag
 		for (Played<Character> c : characters)
@@ -118,6 +159,8 @@ public class Battle {
 			c.entity().generateSTA();
 		for (Played<Monster> m : monsters)
 			m.entity().generateSTA();
+		
+		turn++;
 		return finished();
 	}
 	

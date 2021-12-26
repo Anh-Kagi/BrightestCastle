@@ -71,17 +71,7 @@ public class BattleController {
 						|| target != null)) {
 			target = (target == null ? 0 : target);
 
-			if (battle.attack(sender, target, attack)) {
-				// remove dead characters
-				for (int i = battle.getCharacters().size() - 1; i >= 0; i--)
-					if (battle.getCharacters().get(i).entity().getHP() <= 0)
-						battle.getCharacters().remove(i);
-
-				// remove dead monsters
-				for (int i = battle.getMonsters().size() - 1; i >= 0; i--)
-					if (battle.getMonsters().get(i).entity().getHP() <= 0)
-						battle.getMonsters().remove(i);
-			} else {
+			if (!battle.attack(sender, target, attack)) {
 				res.sendRedirect("/battle");
 				return "blank";
 			}

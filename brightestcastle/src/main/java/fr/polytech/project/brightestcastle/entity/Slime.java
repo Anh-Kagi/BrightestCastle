@@ -10,7 +10,7 @@ public class Slime extends Monster {
 	MonsterType type;
 
 	public Slime() {
-		super("Slime", (byte) 2, (byte) 2);
+		super((byte) 2, (byte) 2);
 	}
 
 	@Override
@@ -22,5 +22,10 @@ public class Slime extends Monster {
 	public List<Attack<Monster>> getAttacks() {
 		return Arrays.asList(new SlimeAttacks.BASH(this),
 				new SlimeAttacks.SLAM(this));
+	}
+
+	@Override
+	public Attack<Monster> selectAttack(int turn) {
+		return turn % 3 == 0 ? getAttacks().get(1) : getAttacks().get(0); // every 3 turns, SLAM, BASH otherwise
 	}
 }
