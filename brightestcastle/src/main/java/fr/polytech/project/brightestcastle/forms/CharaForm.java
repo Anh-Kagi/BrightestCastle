@@ -73,11 +73,11 @@ public class CharaForm {
 	 * @return the validity of the data stored in the {@link CharaForm}
 	 */
 	public boolean isValid() {
-		boolean maxCON = CON >= 0 && CON <= 5;
-		boolean maxSTR = STR >= 0 && STR <= 5;
-		boolean maxVIG = VIG >= 0 && VIG <= 5;
+		boolean maxCON = CON >= 0 && CON <= 8;
+		boolean maxSTR = STR >= 0 && STR <= 8;
+		boolean maxVIG = VIG >= 0 && VIG <= 8;
 		
-		boolean maxPts = (CON + STR + VIG) == 5;
+		boolean maxPts = (CON + STR + VIG) == 8;
 		
 		boolean validJob = (job != null);
 		
