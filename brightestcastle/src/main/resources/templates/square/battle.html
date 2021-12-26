@@ -66,28 +66,29 @@ body {
 		</div>
 	</div>
 
-	<!-- sender selector -->
-	<div>
-		<form name="sender_form" action="/battle" method="get">
-			<select name="sender">
-				<option value="">--</option>
-				<option
-					th:each="i : ${#numbers.sequence(0, battle.getCharacters().size()-1)}"
-					th:value="${i}"
-					th:text="${battle.getCharacters().get(i).entity().getJob().name()}"
-					th:disabled="${battle.getCharacters().get(i).getPlayed()}"
-					th:selected="${sender != null && sender == i}"></option>
-			</select>
-		</form>
-
-		<script>
-		document.sender_form.sender.addEventListener("change", () => {
-			document.sender_form.submit();
-		});
-		</script>
-	</div>
 
 	<div class="hud">
+		<!-- sender selector -->
+		<div>
+			<form name="sender_form" action="/battle" method="get">
+				<select name="sender">
+					<option value="">--</option>
+					<option
+						th:each="i : ${#numbers.sequence(0, battle.getCharacters().size()-1)}"
+						th:value="${i}"
+						th:text="${battle.getCharacters().get(i).entity().getJob().name()}"
+						th:disabled="${battle.getCharacters().get(i).getPlayed()}"
+						th:selected="${sender != null && sender == i}"></option>
+				</select>
+			</form>
+	
+			<script>
+			document.sender_form.sender.addEventListener("change", () => {
+				document.sender_form.submit();
+			});
+			</script>
+		</div>
+		
 		<!-- attack selector -->
 		<div th:if="${sender != null}">
 			<form name="attack_form" action="/battle" method="get">

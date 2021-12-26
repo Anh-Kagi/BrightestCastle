@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.gameplay.Battle;
 import fr.polytech.project.brightestcastle.gameplay.Game;
+import fr.polytech.project.brightestcastle.gameplay.Played;
 
 @Controller
 public class BattleController {
@@ -73,37 +75,37 @@ public class BattleController {
 				for (int i=battle.getCharacters().size()-1; i>=0; i--)
 					if (battle.getCharacters().get(i).entity().getHP() <= 0)
 						battle.getCharacters().remove(i);
-				if (battle.getCharacters().size() == 0) {
-					session.removeAttribute("battle");
-					res.sendRedirect("/gameover");
-					return "blank";
-				}
 					
 				// remove dead monsters
 				for (int i=battle.getMonsters().size()-1; i>=0; i--)
 					if (battle.getMonsters().get(i).entity().getHP() <= 0)
 						battle.getMonsters().remove(i);
-				if (battle.getMonsters().size() == 0) {
-					session.removeAttribute("battle");
-					((Game) session.getAttribute("game")).getSquare().setVisited(true);
-					res.sendRedirect("/map");
-					return "blank";
-				}
 			} else {
 				res.sendRedirect("/battle");
 				return "blank";
 			}
 		}
-
+		
+		boolean all_played = true;
+		for (Played<Character> c : battle.getCharacters())
+			if (!c.getPlayed()) {
+				all_played = false;
+				break;
+			}
+		endTurn = all_played ? "" : endTurn;
 		if (endTurn != null) {
 			if (battle.endTurn()) {
-				if (battle.won()) {
-					res.sendRedirect("/map");
-					return "blank";
-				} else {
+				Game game = (Game) session.getAttribute("game");
+				session.removeAttribute("battle");
+				game.getSquare().setVisited(true);
+				if (battle.won())
+					if (game.getSquare().getDistance() == 0)
+						res.sendRedirect("/victory");
+					else
+						res.sendRedirect("/map");
+				else
 					res.sendRedirect("/gameover");
-					return "blank";
-				}
+				return "blank";
 			}
 		}
 

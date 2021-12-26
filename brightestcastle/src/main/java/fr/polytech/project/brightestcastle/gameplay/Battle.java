@@ -10,6 +10,7 @@ import fr.polytech.project.brightestcastle.entity.Monster;
 import fr.polytech.project.brightestcastle.entity.Slime;
 import fr.polytech.project.brightestcastle.entity.Wizard;
 import fr.polytech.project.brightestcastle.entity.attack.Attack;
+import fr.polytech.project.brightestcastle.gameplay.map.Square;
 
 public class Battle {
 	/**
@@ -30,8 +31,10 @@ public class Battle {
 	public boolean addCharacters(List<Character> characters) {
 		if (characters.size() + this.characters.size() >= Battle.MAX_TEAM_MEMBERS)
 			return false;
-		for (Character c : characters)
+		for (Character c : characters) {
+			c.setSTA(0);
 			this.characters.add(new Played<Character>(c));
+		}
 		return true;
 	}
 	
@@ -96,12 +99,24 @@ public class Battle {
 	
 	public boolean endTurn() {
 		// TODO: foreach enemy, do attack (if possible)
-		// TODO: update states
 
+		// update states
+		for (Played<Character> c : characters)
+			c.entity().statusUpdate();
+		for (Played<Monster> m : monsters)
+			m.entity().statusUpdate();
+		
+		// reset played flag
 		for (Played<Character> c : characters)
 			c.setPlayed(false);
 		for (Played<Monster> m : monsters)
 			m.setPlayed(false);
+		
+		// regen STA
+		for (Played<Character> c : characters)
+			c.entity().generateSTA();
+		for (Played<Monster> m : monsters)
+			m.entity().generateSTA();
 		return finished();
 	}
 	
@@ -116,12 +131,13 @@ public class Battle {
 	/**
 	 * Generates a group of {@link Monster} for a Battle.
 	 * 
-	 * @param dist the distance to the boss's {@link Square}
+	 * @param dist the proximity to the boss's {@link Square}
 	 * @return the group of {@link Monster} (should be &lt;4)
+	 * @see Square#getBossProximity()
 	 */
-	public static Battle generate (List<Character> group, long dist){
+	public static Battle generate (List<Character> group, float dist){
 		List<Monster> monsters = new ArrayList<Monster>();
-		int danger = (int)Math.ceil(dist);
+		int danger = (int)Math.ceil(dist*10);
 		double rand = Math.random();
 		switch (danger) {
 			case 10:

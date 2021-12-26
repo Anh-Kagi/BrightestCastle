@@ -24,7 +24,7 @@ public abstract class Entity {
 		int HP = 25 + CON*5;
 		setHPmax(HP);
 		setHP(HP);
-		setSTA(20);
+		setSTA(0); // max: 20
 		setATKbase(STR + 3);
 		
 		setSTRbase(STR);
@@ -88,7 +88,7 @@ public abstract class Entity {
 		return STA;
 	}
 	
-	public void generateSTA (int vigor) {
+	public void generateSTA() {
 		setSTA(getSTA()+getVIG());
 	}
 	

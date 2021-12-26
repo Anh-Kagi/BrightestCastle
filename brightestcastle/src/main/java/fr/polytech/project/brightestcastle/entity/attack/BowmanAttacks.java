@@ -34,7 +34,7 @@ public abstract class BowmanAttacks {
 		public void attack(Battle battle, Entity target) {
 			if (battle.getMonsters().size() >= 1) {
 				int threat = battle.getMonsters().get(0).entity().takeDamageBlinded((int) (getSender().getATK()*0.5));
-				getSender().generateSTA(getSender().getVIG());
+				getSender().generateSTA();
 				getSender().addThreat(threat);
 			}
 		}

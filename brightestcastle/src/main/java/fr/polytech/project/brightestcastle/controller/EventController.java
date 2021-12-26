@@ -41,12 +41,8 @@ public class EventController {
 			game.getSquare().setVisited(true);
 			return "blank";
 		case BOSS:
-			res.sendRedirect("/map"); // tmp
-			game.getSquare().setVisited(true); //tmp
-			// TODO: boss fight
-			return "blank";
 		case FIGHT:
-			session.setAttribute("battle", Battle.generate(game.getGroup(), game.getSquare().getDistance()));
+			session.setAttribute("battle", Battle.generate(game.getGroup(), game.getSquare().getBossProximity()));
 			res.sendRedirect("/battle");
 			return "blank";
 		case LOOT:
@@ -54,7 +50,9 @@ public class EventController {
 			game.getSquare().setVisited(true);
 			return "square/loot";
 		case CAMP:
-			// TODO: heal characters
+			game.getSquare().setVisited(true);
+			for (Character c : game.getGroup())
+				c.setHP(c.getHPmax());
 			return "square/camp";
 		default:
 			// should not happen
