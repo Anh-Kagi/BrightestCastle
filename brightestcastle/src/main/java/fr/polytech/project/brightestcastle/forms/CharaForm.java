@@ -12,6 +12,8 @@ import fr.polytech.project.brightestcastle.entity.Warrior;
  * @see CreationController
  */
 public class CharaForm {
+	public static int STAT_POINT = 8;
+	
 	private String name;
 	
 	private CharacterJob job;
@@ -77,7 +79,7 @@ public class CharaForm {
 		boolean maxSTR = STR >= 0 && STR <= 8;
 		boolean maxVIG = VIG >= 0 && VIG <= 8;
 		
-		boolean maxPts = (CON + STR + VIG) == 8;
+		boolean maxPts = (CON + STR + VIG) == STAT_POINT;
 		
 		boolean validJob = (job != null);
 		

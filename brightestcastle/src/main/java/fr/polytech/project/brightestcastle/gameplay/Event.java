@@ -78,8 +78,13 @@ public class Event {
 			}
 			break;
 		case 2:
-			ret.add("You encounter some lost traveler that seem pretty capable, they offer to join your team, as their previous collaborator meet an unfortunate end...");
-			// TODO: generating a teammate
+			ret.add("You encounter some lost traveler that seem pretty capable.");
+			if (group.size() >= 4)
+				ret.add("You offer him to join your company, but he refuses, mocking you while walking away.");
+			else {
+				ret.add("He chooses to join your group, since his former company had an unfortunate end...")
+				group.add(Character.generate());
+			}
 			break;
 		case 1:
 			ret.add("You fell into an ambush! Some monster attacked you when your guard was down, injuring you before you could slay them...");

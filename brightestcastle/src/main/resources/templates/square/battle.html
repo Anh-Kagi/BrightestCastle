@@ -31,8 +31,8 @@ body {
 	<h1>Battle</h1>
 
 	<div class="group">
-		<div th:each="chara : ${battle.getCharacters()}">
-			<div th:text="${chara.entity().getJob().name()}"></div>
+		<div th:each="i : ${#numbers.sequence(battle.getCharacters().size()-1, 0, -1)}" th:with="chara=${battle.getCharacters().get(i)}">
+			<div th:text="${chara.entity().getName()}"></div>
 			<div>
 				played: <span th:text="${chara.getPlayed()}"></span><br/>
 				HP: <span th:text="${chara.entity().getHP()}"></span>/<span th:text="${chara.entity().getHPmax()}"></span><br/>
@@ -80,7 +80,7 @@ body {
 					<option
 						th:each="i : ${#numbers.sequence(0, battle.getCharacters().size()-1)}"
 						th:value="${i}"
-						th:text="${battle.getCharacters().get(i).entity().getJob().name()}"
+						th:text="${battle.getCharacters().get(i).entity().getName()}"
 						th:disabled="${battle.getCharacters().get(i).getPlayed() || battle.getCharacters().get(i).entity().isAffected(T(fr.polytech.project.brightestcastle.entity.StatusEnum).STUNNED)}"
 						th:selected="${sender != null && sender == i}"></option>
 				</select>

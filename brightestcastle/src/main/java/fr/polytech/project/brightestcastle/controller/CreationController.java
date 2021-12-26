@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.forms.CharaForm;
 import fr.polytech.project.brightestcastle.gameplay.Game;
 
@@ -53,6 +54,8 @@ public class CreationController {
 		model.addAttribute("chara", form);
 		Game game = new Game(12, 6);
 		game.getGroup().add(form.toCharacter());
+		for (int i=0; i<2; i++)
+			game.getGroup().add(Character.generate());
 		session.setAttribute("game", game);
 		return "chara";
 	}
