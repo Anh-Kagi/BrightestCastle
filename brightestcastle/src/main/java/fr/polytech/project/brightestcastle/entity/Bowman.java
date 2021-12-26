@@ -11,7 +11,7 @@ public class Bowman extends Character {
 	// passive: Swift: 15% chance to dodge all damage
 
 	public Bowman(String name, byte STR, byte CON, byte VIG) {
-		super(name, STR, CON, (byte) (VIG + 2));
+		super(name, (byte)(STR+1), (byte)(CON+1), (byte) (VIG + 4));
 	}
 
 	@Override

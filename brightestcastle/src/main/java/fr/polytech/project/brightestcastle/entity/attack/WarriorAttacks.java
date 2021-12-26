@@ -29,13 +29,13 @@ public abstract class WarriorAttacks {
 	
 	public static class SWING extends Attack<Character> {
 		public SWING(Character sender) {
-			super(sender, "SWING", "A circular attack, target the two front rows for 150% of damages, \nHave a 25% chance to apply stun, cost 3 stamina");
+			super(sender, "SWING", "A circular attack, target the two front rows for 150% of damages, \nHave a 50% chance to apply stun, cost 3 stamina");
 		}
 		
 		@Override
 		public void attack(Battle battle, Entity target) {
 			if (getSender().getSTA() >= 3) {
-				boolean stun = Math.random() < 0.25;
+				boolean stun = Math.random() < 0.5;
 				for (int i=0; i<Math.min(2, battle.getMonsters().size()); i++) {
 					if (stun)
 						battle.getMonsters().get(i).entity().addStatus(StatusEnum.STUNNED, 1);
@@ -71,14 +71,14 @@ public abstract class WarriorAttacks {
 	
 	public static class OBLITERATE extends Attack<Character> {
 		public OBLITERATE(Character sender) {
-			super(sender, "OBLITERATE", "Completely crush the foe on the front row for 500% damage with a 100% chance stun. Only at max stamina, deleat it completely afterward.");
+			super(sender, "OBLITERATE", "Completely crush the foe on the front row for 600% damage with a 100% chance stun. Only at max stamina, deleat it completely afterward.");
 		}
 		
 		public void attack(Battle battle, Entity target) {
 			if(getSender().getSTA() == 20) {
 				if (battle.getMonsters().size() >= 1) {
 					Monster opponent = battle.getMonsters().get(0).entity();
-					int threat = opponent.takeDamage(getSender().getATK()*5);
+					int threat = opponent.takeDamage(getSender().getATK()*6);
 					getSender().setSTA(0);
 					getSender().addThreat(threat);
 					opponent.addStatus(StatusEnum.STUNNED, 1);

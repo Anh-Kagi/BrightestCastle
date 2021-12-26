@@ -10,7 +10,7 @@ public class Paladin extends Character {
 	// passive : Taunt => greater threat, threat generation improved by 50%
 
 	public Paladin(String name, byte STR, byte CON, byte VIG) {
-		super(name, STR, (byte) (CON + 2), VIG);
+		super(name, (byte)(STR+1), (byte) (CON + 4), (byte)(VIG+1));
 		super.setThreat(25);
 	}
 

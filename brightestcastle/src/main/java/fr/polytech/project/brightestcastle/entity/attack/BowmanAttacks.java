@@ -27,13 +27,13 @@ public abstract class BowmanAttacks {
 	
 	public static class STAB extends Attack<Character> {
 		public STAB(Character sender) {
-			super(sender, "STAB", "Melee attack, deals only 50% damages to the front row, but double stamina regeneration for this turn");
+			super(sender, "STAB", "Melee attack, deals only 75% damages to the front row, but double stamina regeneration for this turn");
 		}
 		
 		@Override
 		public void attack(Battle battle, Entity target) {
 			if (battle.getMonsters().size() >= 1) {
-				int threat = battle.getMonsters().get(0).entity().takeDamageBlinded((int) (getSender().getATK()*0.5));
+				int threat = battle.getMonsters().get(0).entity().takeDamageBlinded((int) (getSender().getATK()*0.75));
 				getSender().generateSTA();
 				getSender().addThreat(threat);
 			}
@@ -47,7 +47,7 @@ public abstract class BowmanAttacks {
 	
 	public static class ARROW extends Attack<Character> {
 		public ARROW(Character sender) {
-			super(sender, "MAGIC ARROW", "Send guided arrows at targets at random for 100% send one more arrow every 3 stamina points. Ignore Armor and dodge");
+			super(sender, "MAGIC ARROW", "Send guided arrows at targets at random for 150% send one more arrow every 3 stamina points. Ignore Armor and dodge");
 		}
 		
 		@Override
@@ -57,7 +57,7 @@ public abstract class BowmanAttacks {
 				int nbArrows = (int) Math.floor(getSender().getSTA()/3);
 				for(int i=0; i<nbArrows; i++) {
 					int randomNum = ThreadLocalRandom.current().nextInt(0, battle.getMonsters().size());
-					threat += battle.getMonsters().get(randomNum).entity().takeTrueDamage(getSender().getATK());	
+					threat += battle.getMonsters().get(randomNum).entity().takeTrueDamage((int) (getSender().getATK()*1.5));	
 				}
 				getSender().addThreat(threat);
 				getSender().setSTA(getSender().getSTA() - nbArrows*3);
@@ -72,13 +72,13 @@ public abstract class BowmanAttacks {
 	
 	public static class PIERCE extends Attack<Character> {
 		public PIERCE(Character sender) {
-			super(sender, "PIERCE", "Completely pierce through any foe for 200% damage, also reduces it's defense by 25% for 3 turns, cost 5 stamina.");
+			super(sender, "PIERCE", "Completely pierce through any foe for 250% damage, also reduces it's defense by 25% for 3 turns, cost 5 stamina.");
 		}
 		
 		@Override
 		public void attack(Battle battle, Entity target) {
 			if (getSender().getSTA() >= 5) {
-				int threat = target.takeDamageBlinded(getSender().getATK() * 2);
+				int threat = target.takeDamageBlinded((int)(getSender().getATK() * 2.5));
 				target.addStatus(StatusEnum.DEFDOWN, 3);
 				getSender().setSTA(getSender().getSTA() - 5);
 				getSender().addThreat(threat);

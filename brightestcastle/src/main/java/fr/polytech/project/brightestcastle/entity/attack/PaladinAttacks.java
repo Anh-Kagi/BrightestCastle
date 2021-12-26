@@ -26,12 +26,12 @@ public abstract class PaladinAttacks {
 	
 	public static class RALLY extends Attack<Character> {
 		public RALLY(Character sender) {
-			super(sender, "RALLY", "Inspire the allies in order to boost their defense by 25% for 2 turns");
+			super(sender, "RALLY", "Inspire the allies in order to boost their defense by 25% for 3 turns");
 		}
 		
 		public void attack(Battle battle, Entity target) {
 			for (Played<Character> c : battle.getCharacters())
-				c.entity().addStatus(StatusEnum.DEFUP, 2);
+				c.entity().addStatus(StatusEnum.DEFUP, 3);
 		}
 
 		@Override
@@ -47,9 +47,9 @@ public abstract class PaladinAttacks {
 		
 		public void attack(Battle battle, Entity target) {
 			if (getSender().getSTA() >= 3) {
-				getSender().setHP(getSender().getHP() + getSender().getCON());
+				getSender().setHP(getSender().getHP() + getSender().getCON()*2);
 				getSender().setSTA(getSender().getSTA() - 3);
-				getSender().addThreat(getSender().getCON());
+				getSender().addThreat(getSender().getCON()*2);
 			} else System.out.println("Not enough Stamina !");
 		}
 

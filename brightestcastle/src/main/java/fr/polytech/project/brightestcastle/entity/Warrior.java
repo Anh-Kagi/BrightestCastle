@@ -10,7 +10,7 @@ public class Warrior extends Character {
 	// passive = Rage -> attk + when hp low
 
 	public Warrior(String name, byte STR, byte CON, byte VIG) {
-		super(name, (byte) (STR + 2), CON, VIG);
+		super(name, (byte) (STR + 4), (byte)(CON+1), (byte)(VIG+1));
 	}
 
 	@Override
