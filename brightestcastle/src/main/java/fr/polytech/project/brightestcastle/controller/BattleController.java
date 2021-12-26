@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import fr.polytech.project.brightestcastle.entity.Character;
+import fr.polytech.project.brightestcastle.entity.StatusEnum;
 import fr.polytech.project.brightestcastle.gameplay.Battle;
 import fr.polytech.project.brightestcastle.gameplay.Game;
 import fr.polytech.project.brightestcastle.gameplay.Played;
@@ -30,8 +31,8 @@ public class BattleController {
 		}
 
 		if (sender != null) {
-			if (sender < 0 || sender >= battle.getCharacters().size()
-					|| battle.getCharacters().get(sender).getPlayed()) {
+			if (sender < 0 || sender >= battle.getCharacters().size() || battle.getCharacters().get(sender).getPlayed()
+					|| battle.getCharacters().get(sender).entity().isAffected(StatusEnum.STUNNED)) {
 				sender = null;
 				attack = null;
 				target = null;
@@ -69,15 +70,15 @@ public class BattleController {
 				&& (!battle.getCharacters().get(sender).entity().getAttacks().get(attack).needTarget()
 						|| target != null)) {
 			target = (target == null ? 0 : target);
-			
+
 			if (battle.attack(sender, target, attack)) {
 				// remove dead characters
-				for (int i=battle.getCharacters().size()-1; i>=0; i--)
+				for (int i = battle.getCharacters().size() - 1; i >= 0; i--)
 					if (battle.getCharacters().get(i).entity().getHP() <= 0)
 						battle.getCharacters().remove(i);
-					
+
 				// remove dead monsters
-				for (int i=battle.getMonsters().size()-1; i>=0; i--)
+				for (int i = battle.getMonsters().size() - 1; i >= 0; i--)
 					if (battle.getMonsters().get(i).entity().getHP() <= 0)
 						battle.getMonsters().remove(i);
 			} else {
@@ -85,7 +86,7 @@ public class BattleController {
 				return "blank";
 			}
 		}
-		
+
 		boolean all_played = true;
 		for (Played<Character> c : battle.getCharacters())
 			if (!c.getPlayed()) {

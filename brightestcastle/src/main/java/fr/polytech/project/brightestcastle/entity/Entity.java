@@ -216,14 +216,15 @@ public abstract class Entity {
 	}
 
 	public void statusUpdate() {
-		for(int i=this.status.size()-1; i>=0; i--) {
-			this.status.get(i).countDown();
+		for(int i=status.size()-1; i>=0; i--) {
+			Status s = status.get(i);
+			s.countDown();
 			
-			if(this.status.get(i).getName() == StatusEnum.POISONNED)
+			if(s.getName() == StatusEnum.POISONNED)
 				takeTrueDamage(5);
 			
-			if (this.status.get(i).getDuration() == 0)
-				this.status.remove(i);
+			if (s.getDuration() == 0)
+				status.remove(i);
 		}
 	}
 }

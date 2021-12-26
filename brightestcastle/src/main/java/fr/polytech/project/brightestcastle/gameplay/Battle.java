@@ -8,6 +8,7 @@ import fr.polytech.project.brightestcastle.entity.Character;
 import fr.polytech.project.brightestcastle.entity.EdgyKnight;
 import fr.polytech.project.brightestcastle.entity.Monster;
 import fr.polytech.project.brightestcastle.entity.Slime;
+import fr.polytech.project.brightestcastle.entity.StatusEnum;
 import fr.polytech.project.brightestcastle.entity.Wizard;
 import fr.polytech.project.brightestcastle.entity.attack.Attack;
 import fr.polytech.project.brightestcastle.gameplay.map.Square;
@@ -80,7 +81,7 @@ public class Battle {
 		System.out.println("Attack: " + sender + " " + target + " " + attack);
 		if (sender >= 0 && sender < this.characters.size()) { // check that the sender exists
 			Played<Character> c = getCharacters().get(sender);
-			if (!c.getPlayed()) { // if player didn't played already this turn
+			if (!c.getPlayed() && !c.entity().isAffected(StatusEnum.STUNNED)) { // if player didn't played already this turn nor is stunned
 				if (attack >= 0 && attack < c.entity().getAttacks().size()) { // check that the attack exists
 					Attack<Character> a = c.entity().getAttacks().get(attack);
 					Monster m = (a.needTarget() && target >= 0 && target < getMonsters().size()) ? getMonsters().get(target).entity() : null; // check that the target exists or isn't needed

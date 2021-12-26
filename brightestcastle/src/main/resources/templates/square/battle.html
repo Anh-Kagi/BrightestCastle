@@ -44,6 +44,8 @@ body {
 				ATK: <span th:text="${chara.entity().getATKbase()}"></span> + <span th:text="${chara.entity().getATKmod()}"></span><br/>
 				DEF: <span th:text="${chara.entity().getDEFbase()}"></span> + <span th:text="${chara.entity().getDEFmod()}"></span><br/>
 				STA: <span th:text="${chara.entity().getSTA()}"></span><br/>
+				<hr/>
+				<span th:each="status : ${chara.entity().getListStatus()}" th:text="${status.getName().name() + ' '}"></span>
 			</div>
 		</div>
 
@@ -62,6 +64,8 @@ body {
 				ATK: <span th:text="${monster.entity().getATKbase()}"></span> + <span th:text="${monster.entity().getATKmod()}"></span><br/>
 				DEF: <span th:text="${monster.entity().getDEFbase()}"></span> + <span th:text="${monster.entity().getDEFmod()}"></span><br/>
 				STA: <span th:text="${monster.entity().getSTA()}"></span><br/>
+				<hr/>
+				<span th:each="status : ${monster.entity().getListStatus()}" th:text="${status.getName().name() + ' '}"></span>
 			</div>
 		</div>
 	</div>
@@ -77,7 +81,7 @@ body {
 						th:each="i : ${#numbers.sequence(0, battle.getCharacters().size()-1)}"
 						th:value="${i}"
 						th:text="${battle.getCharacters().get(i).entity().getJob().name()}"
-						th:disabled="${battle.getCharacters().get(i).getPlayed()}"
+						th:disabled="${battle.getCharacters().get(i).getPlayed() || battle.getCharacters().get(i).entity().isAffected(T(fr.polytech.project.brightestcastle.entity.StatusEnum).STUNNED)}"
 						th:selected="${sender != null && sender == i}"></option>
 				</select>
 			</form>
